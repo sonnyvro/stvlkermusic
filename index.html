@@ -11,111 +11,50 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Montserrat', sans-serif; background-color: #050505; color: #d1d1d1; overflow-x: hidden; cursor: crosshair; }
         
-        /* Lightning Flash (Visible on Top) */
-        @keyframes lightning {
-            0%, 95%, 98% { opacity: 0; }
-            96% { opacity: 0.15; }
-            97% { opacity: 0.05; }
-        }
-        .lightning {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; pointer-events: none; z-index: 10001;
-            animation: lightning 12s linear infinite;
-        }
+        /* Loading Screen */
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 20000; display: flex; justify-content: center; align-items: center; color: #e60000; font-family: 'Bebas Neue', sans-serif; font-size: 2rem; transition: opacity 0.5s ease; }
+        .loader-text { animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        /* Scattered Side GIFs */
-        .floating-gif {
-            position: fixed; width: 120px; opacity: 0.3; z-index: 0; pointer-events: none;
-        }
-        .gif-left { left: 20px; top: 20%; }
-        .gif-right { right: 20px; top: 60%; }
-        .gif-top-left { top: 5%; left: 10%; }
-        .gif-top-right { top: 10%; right: 5%; }
-        .gif-bottom-left { bottom: 5%; left: 5%; }
-        .gif-bottom-right { bottom: 10%; right: 15%; }
+        /* Cinematic Reveal Animations */
+        header, section, .main-container { animation: reveal 1s ease-out forwards; opacity: 0; }
+        @keyframes reveal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        header { animation-delay: 0.2s; }
+        .hero { animation-delay: 0.4s; }
+        .main-container { animation-delay: 0.6s; }
 
-        /* Flashlight Glow */
-        #flashlight {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999;
-            background: radial-gradient(
-                circle 1000px at var(--x, 50%) var(--y, 50%), 
-                transparent 0%, 
-                rgba(0, 0, 0, 0.2) 60%, 
-                rgba(0, 0, 0, 0.98) 100%
-            );
-        }
+        /* Lightning Flash */
+        @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.15; } 97% { opacity: 0.05; } }
+        .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; pointer-events: none; z-index: 10001; animation: lightning 12s linear infinite; }
+        
+        /* Floating & Scattered GIFs */
+        .floating-gif { position: fixed; width: 120px; opacity: 0.3; z-index: 0; pointer-events: none; animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .gif-left { left: 20px; top: 20%; } .gif-right { right: 20px; top: 60%; }
+        .gif-top-left { top: 5%; left: 10%; } .gif-top-right { top: 10%; right: 5%; }
+        .gif-bottom-left { bottom: 5%; left: 5%; } .gif-bottom-right { bottom: 10%; right: 15%; }
+        
+        #flashlight { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background: radial-gradient(circle 1000px at var(--x, 50%) var(--y, 50%), transparent 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.98) 100%); }
         @media (pointer: coarse) { #flashlight { display: none; } }
-
-        /* Glitch Effect */
-        .track-card:hover, h1:hover { animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        /* News Ticker */
-        .news-ticker { background: #e60000; color: #fff; overflow: hidden; padding: 8px 0; font-family: 'Bebas Neue', sans-serif; z-index: 2; position: relative; }
-        .news-ticker p { white-space: nowrap; animation: scrollText 15s linear infinite; }
-        @keyframes scrollText { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
         /* UI Elements */
         #start-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10002; display: flex; justify-content: center; align-items: center; }
         .enter-btn { padding: 20px 40px; font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; background: transparent; color: #e60000; border: 2px solid #e60000; cursor: pointer; transition: 0.3s; }
         .enter-btn:hover { background: #e60000; color: #fff; }
 
-        .content-filter { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3); pointer-events: none; z-index: 9998; }
         .overlay-gif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('wallpaper.gif'); background-size: cover; background-position: center; opacity: 0.1; pointer-events: none; z-index: -1; }
-
-        section { animation: fadeIn 1.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .hero h1 { animation: glow 3s infinite alternate; }
+        .hero h1 { animation: glow 3s infinite alternate; font-size: 3.5rem; color: #fff; }
         @keyframes glow { from { text-shadow: 0 0 5px #e60000; } to { text-shadow: 0 0 20px #e60000; } }
-
         .main-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 1; }
-        h1, h2, h3, .logo, .btn { font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; }
-        a { color: #e60000; text-decoration: none; transition: 0.3s; }
-        a:hover { color: #ff3333; }
-
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 10%; background-color: #111; border-bottom: 2px solid #e60000; position: relative; z-index: 2; }
-        nav ul { display: flex; list-style: none; }
-        nav ul li { margin-left: 20px; }
-        nav ul li a { color: #fff; }
-
-        .hero { text-align: center; padding: 100px 20px; background: linear-gradient(rgba(5, 5, 5, 0.85), #050505), url('7f67efa80c099233ef3683c793a38249.jpg') no-repeat center center/cover; position: relative; z-index: 1; }
-        .hero h1 { font-size: 3.5rem; color: #fff; margin-bottom: 10px; }
-        .btn { display: inline-block; background: #e60000; color: #fff; padding: 12px 30px; border-radius: 3px; font-weight: bold; text-transform: uppercase; }
-
-        .section-title { font-size: 2rem; color: #fff; margin-bottom: 40px; border-left: 5px solid #e60000; padding-left: 15px; }
-        .music-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
-        .track-card { background-color: #111; border: 1px solid #222; border-radius: 5px; overflow: hidden; transition: 0.3s; }
-        .track-card:hover { border-color: #fff; transform: translateY(-5px); }
-        .track-art { width: 100%; height: 300px; object-fit: cover; }
-        .track-info { padding: 25px; }
-        .track-story { background-color: #050505; padding: 15px; border-left: 3px solid #e60000; margin-bottom: 20px; font-size: 0.9rem; color: #aaa; }
-        audio { width: 100%; margin-bottom: 20px; }
-        
-        .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-        .shop-card { background: #111; padding: 30px; border: 1px solid #e60000; border-radius: 5px; text-align: center; transition: 0.3s; }
-        .shop-card:hover { border-color: #fff; transform: translateY(-5px); }
-        .price { color: #e60000; font-weight: bold; font-size: 1.4rem; margin: 10px 0; }
-        .shop-btn { display: block; margin-top: 20px; padding: 10px; background: #e60000; color: #fff; border-radius: 3px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; transition: 0.3s; }
-        .shop-btn:hover { background: #fff; color: #e60000; }
-        
-        .about-section { text-align: center; padding: 60px 20px; position: relative; z-index: 1; }
-        .profile-pic { width: 220px; height: 220px; border-radius: 50%; border: 4px solid #e60000; object-fit: cover; margin-bottom: 25px; }
-        .contact-section { padding: 60px 20px; background-color: #0b0b0b; text-align: center; position: relative; z-index: 1; }
-        .contact-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px; }
-        .contact-item { background: #111; padding: 20px; border: 1px solid #e60000; border-radius: 5px; width: 200px; }
-        footer { text-align: center; padding: 40px; background-color: #111; border-top: 2px solid #e60000; color: #666; position: relative; z-index: 1; }
+        .btn { display: inline-block; background: #e60000; color: #fff; padding: 12px 30px; border-radius: 3px; font-weight: bold; text-transform: uppercase; font-family: 'Bebas Neue'; }
     </style>
 </head>
 <body>
+
+    <div id="loading-screen">
+        <div class="loader-text">LOADING THE VOID...</div>
+    </div>
 
     <audio id="bg-audio" loop><source src="thunderstorm.mp3" type="audio/mpeg"></audio>
 
@@ -123,13 +62,10 @@
         <button class="enter-btn" onclick="startAudio()">ENTER THE VOID</button>
     </div>
 
-    <!-- Effects -->
     <div class="lightning"></div>
     <div id="flashlight"></div>
     <div class="overlay-gif"></div>
-    <div class="content-filter"></div>
     
-    <!-- Scattered GIFs -->
     <img src="bone.gif" class="floating-gif gif-left">
     <img src="crow.gif" class="floating-gif gif-right">
     <img src="punk.gif" class="floating-gif gif-top-left">
@@ -149,77 +85,19 @@
         </nav>
     </header>
 
-    <div class="news-ticker">
-        <p>>>> NEW TRACK DROPPING SOON // BEATS AVAILABLE FOR LEASE // DM FOR CUSTOM WORK <<<</p>
-    </div>
-
     <section class="hero">
         <h1>SONNYVRO/STVLKING</h1>
         <p>new stuff soon</p>
         <a href="#music" class="btn">enjoy.</a>
     </section>
 
-    <main class="main-container" id="music">
-        <h2 class="section-title">fresh pressed</h2>
-        <div class="music-grid">
-            <div class="track-card">
-                <img src="hurt.jpg" alt="Album Art" class="track-art">
-                <div class="track-info">
-                    <h3 class="track-title">hurt.mp3</h3>
-                    <p class="track-genre">distorted/heavy</p>
-                    <div class="track-story">suffer</div>
-                    <audio controls><source src="hurt.mp3" type="audio/mpeg"></audio>
-                    <div class="streaming-links">
-                        <a href="https://open.spotify.com/track/1D5X9erQKiCatTkkqGayNx" target="_blank"><i class="fab fa-spotify"></i></a>
-                        <a href="https://soundcloud.com/user-11954578/hurt-wav" target="_blank"><i class="fab fa-soundcloud"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <section id="shop" class="main-container shop-section">
-        <h2 class="section-title">Shop Services</h2>
-        <div class="shop-grid">
-            <div class="shop-card">
-                <h3>Custom Beats</h3>
-                <p class="price">$100+</p>
-                <p>Custom made for your vision! Includes stems and exclusive rights.</p>
-                <a href="#contact" class="shop-btn">Inquire Now</a>
-            </div>
-            <div class="shop-card">
-                <h3>Premade Beats</h3>
-                <p class="price">$30 - $50</p>
-                <p>High-quality leases ready for immediate download and use.</p>
-                <a href="https://cash.app/$YourCashTag" target="_blank" class="shop-btn">Purchase via CashApp</a>
-            </div>
-            <div class="shop-card">
-                <h3>Features</h3>
-                <p class="price">Contact for quote!</p>
-                <p>Vocals, production assistance, or collaboration on your track.</p>
-                <a href="#contact" class="shop-btn">Message Me</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="about-section">
-        <h2 class="section-title">The Artist</h2>
-        <img src="logo.png" alt="Artist" class="profile-pic">
-        <p>NOISE TO FILL THE VOID! 21 year old artist tryna make cool sounds.</p>
-    </section>
-
-    <section id="contact" class="contact-section">
-        <h2 class="section-title">contact me</h2>
-        <div class="contact-grid">
-            <div class="contact-item"><i class="fas fa-envelope"></i><br><a href="mailto:sonnyvromusic@gmail.com">Email Me</a></div>
-            <div class="contact-item"><i class="fab fa-instagram"></i><br><a href="https://instagram.com/sonnyvro" target="_blank">Instagram</a></div>
-            <div class="contact-item"><i class="fab fa-discord"></i><br><p>@stvlking</p></div>
-        </div>
-    </section>
-
-    <footer><p>© 2026 SONNYVRO/STVLKING. Hosted via <span>GitHub Pages</span>.</p></footer>
-
     <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loading-screen');
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; }, 500);
+        });
+
         const flashlight = document.getElementById('flashlight');
         const audio = document.getElementById('bg-audio');
         const startScreen = document.getElementById('start-screen');
@@ -232,11 +110,9 @@
         function startAudio() {
             audio.play().then(() => {
                 startScreen.style.display = 'none';
-            }).catch(error => {
-                console.error("Audio playback failed:", error);
-                alert("Could not start audio.");
-            });
+            }).catch(error => { console.error("Audio failed:", error); });
         }
     </script>
 </body>
 </html>
+ 
