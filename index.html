@@ -10,7 +10,25 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background-color: #020202; color: #888; overflow-x: hidden; cursor: crosshair; }
 
-        /* Rain Overlay */
+        /* Video Background */
+        #bg-video {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 0; pointer-events: none;
+            filter: blur(2px) grayscale(100%); opacity: 0.15;
+        }
+
+        /* Crack Effect Container */
+        #cracks-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9996;
+        }
+        .crack-mark {
+            position: absolute; width: 150px; height: 150px;
+            background: url('https://www.transparenttextures.com/patterns/cracked-glass.png');
+            opacity: 0.2; pointer-events: none; filter: invert(1);
+        }
+
+        /* Rain & Noise */
         .rain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://www.transparenttextures.com/patterns/rain.png');
@@ -19,7 +37,6 @@
         }
         @keyframes rain-move { from { background-position: 0 0; } to { background-position: 100px 1000px; } }
 
-        /* VHS Noise/Grain Overlay */
         body::after {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://www.transparenttextures.com/patterns/noise-lines.png');
@@ -27,19 +44,14 @@
         }
 
         /* Glitch Animation */
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 1px); }
-            40% { transform: translate(2px, -1px); }
-            100% { transform: translate(0); }
-        }
+        @keyframes glitch { 0% { transform: translate(0); } 20% { transform: translate(-2px, 1px); } 40% { transform: translate(2px, -1px); } 100% { transform: translate(0); } }
         .glitch-effect { animation: glitch 2s infinite linear; }
 
-        #bg-logo {
+        #logo-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('logo.png');
             background-repeat: no-repeat; background-position: center; background-size: 40%;
-            opacity: 0.04; z-index: 0; pointer-events: none; filter: blur(2px);
+            opacity: 0.04; z-index: 1; pointer-events: none; filter: blur(2px);
         }
 
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0.03)); background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 1; }
@@ -60,9 +72,11 @@
 </head>
 <body>
 
+    <video id="bg-video" autoplay loop muted playsinline><source src="background.mp4" type="video/mp4"></video>
+    <div id="logo-overlay"></div>
+    <div id="cracks-container"></div>
     <div class="rain"></div>
     <audio id="bg-audio" loop><source src="thunderstorm.mp3" type="audio/mpeg"></audio>
-    <div id="bg-logo"></div>
     <div class="lightning"></div>
 
     <div id="service-modal">
@@ -74,7 +88,7 @@
     </div>
 
     <div id="start-screen" style="position: fixed; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; justify-content: center; align-items: center;">
-        <button class="enter-btn" onclick="startAudio()">ENTER THE GRAVE</button>
+        <button class="enter-btn" onclick="startAudio()">enter...</button>
     </div>
 
     <div id="site-wrapper" class="glitch-effect">
@@ -122,6 +136,17 @@
             statusEl.style.color = "#ff0000";
         }
 
+        // Crack effect
+        document.addEventListener('click', function(e) {
+            const crack = document.createElement('div');
+            crack.className = 'crack-mark';
+            crack.style.left = (e.clientX - 75) + 'px';
+            crack.style.top = (e.clientY - 75) + 'px';
+            crack.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+            document.getElementById('cracks-container').appendChild(crack);
+            setTimeout(() => { crack.style.transition = "opacity 2s"; crack.style.opacity = "0"; setTimeout(() => crack.remove(), 2000); }, 3000);
+        });
+
         function openModal(t, d) {
             document.getElementById('modal-title').innerText = t;
             document.getElementById('modal-desc').innerText = d;
@@ -130,14 +155,9 @@
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
         function startAudio() {
             const audio = document.getElementById('bg-audio');
-            audio.volume = 0.3;
-            audio.play();
+            audio.volume = 0.3; audio.play();
             document.getElementById('start-screen').style.display = 'none';
         }
     </script>
 </body>
 </html>
-
-
-
- 
