@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sonnyvro | stvlking</title>
-    <!-- Added FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -25,7 +24,7 @@
             40% { transform: translate(2px, -1px); }
             100% { transform: translate(0); }
         }
-        .glitch-effect { animation: glitch 4s infinite linear; }
+        .glitch-effect { animation: glitch 2s infinite linear; }
 
         #bg-logo {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -65,31 +64,28 @@
     </div>
 
     <div id="start-screen" style="position: fixed; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; justify-content: center; align-items: center;">
-        <button class="enter-btn" onclick="startAudio()">ENTER THE VOID</button>
+        <button class="enter-btn" onclick="startAudio()">ENTER THE GRAVE</button>
     </div>
 
     <div id="site-wrapper" class="glitch-effect">
         <header style="padding: 20px 10%; border-bottom: 1px solid #1a0000;">
-            <div class="logo" style="font-family: 'Bebas Neue'; font-size: 1.5rem; letter-spacing: 2px;">SONNYVRO</div>
+            <div class="logo" style="font-family: 'Bebas Neue'; font-size: 1.5rem; letter-spacing: 2px;">0_0</div>
         </header>
 
         <section class="hero"><h1>SONNYVRO/STVLKING</h1></section>
 
         <main class="main-container">
-            <!-- Availability Toggle -->
             <div id="status-indicator" style="text-align: center; margin-bottom: 50px; font-family: 'Bebas Neue'; letter-spacing: 2px;">
                 <span id="status-text" style="padding: 5px 15px; border: 1px solid #330; color: #fff;"></span>
             </div>
 
-            <!-- FOR SALE Showcase -->
             <h2 style="color:#fff; text-align: center; margin-bottom: 20px; font-family: 'Bebas Neue'; letter-spacing: 3px;">FOR SALE</h2>
-            <div class="shop-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 80px;">
-                <a href="#" class="shop-card" style="text-align: center;"><h3>BEAT TITLE 01</h3></a>
-                <a href="#" class="shop-card" style="text-align: center;"><h3>BEAT TITLE 02</h3></a>
-                <a href="#" class="shop-card" style="text-align: center;"><h3>BEAT TITLE 03</h3></a>
+            <div style="display: flex; justify-content: center; margin-bottom: 80px;">
+                <a href="https://air.bi/nXZu4" target="_blank" class="shop-card" style="text-align: center; width: 250px;">
+                    <h3>STOCK</h3>
+                </a>
             </div>
 
-            <!-- Shop Services -->
             <h2 style="color:#666; font-size: 1rem; letter-spacing: 5px; text-align: center;">SERVICES</h2>
             <div class="shop-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top:40px;">
                 <div class="shop-card" onclick="openModal('Custom Beats', 'Custom made for your vision! Price starts at $50+. Contact me to start.')">
@@ -134,4 +130,3 @@
     </script>
 </body>
 </html>
- 
