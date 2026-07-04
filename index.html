@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sonnyvro | stvlking</title>
+    <!-- Added FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,7 +18,7 @@
             opacity: 0.03; pointer-events: none; z-index: 9998;
         }
 
-        /* Glitch Animation (Subtle) */
+        /* Glitch Animation */
         @keyframes glitch {
             0% { transform: translate(0); }
             20% { transform: translate(-2px, 1px); }
@@ -25,7 +27,6 @@
         }
         .glitch-effect { animation: glitch 4s infinite linear; }
 
-        /* Giant Background Logo */
         #bg-logo {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('logo.png');
@@ -33,12 +34,10 @@
             opacity: 0.04; z-index: 0; pointer-events: none; filter: blur(2px);
         }
 
-        /* Ambient Fog/Scanlines */
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0.03)); background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 1; }
         .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; pointer-events: none; z-index: 2; animation: lightning 15s linear infinite; }
         @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.04; } 97% { opacity: 0.01; } }
 
-        /* Modal & UI */
         #service-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100000; justify-content: center; align-items: center; }
         .modal-content { background: #0a0a0a; padding: 40px; border: 1px solid #330000; text-align: center; max-width: 500px; color: #fff; }
         .close-btn { margin-top: 20px; color: #e60000; cursor: pointer; text-transform: uppercase; font-family: 'Bebas Neue'; }
@@ -46,15 +45,14 @@
         #site-wrapper { position: relative; z-index: 3; }
         .main-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
         .shop-card { background: #050505; border: 1px solid #1a0000; padding: 25px; cursor: pointer; transition: 0.4s; color: #888; text-decoration: none; display: block; }
-        .shop-card:hover { border-color: #550000; background: #080808; }
-        .hero { text-align: center; padding: 150px 20px; }
+        .shop-card:hover { border-color: #550000; background: #080808; color: #fff; }
+        .hero { text-align: center; padding: 100px 20px 50px 20px; }
         .enter-btn { padding: 15px 30px; font-family: 'Bebas Neue'; font-size: 1.5rem; background: transparent; color: #e60000; border: 1px solid #e60000; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <audio id="bg-audio" loop><source src="thunderstorm.mp3" type="audio/mpeg"></audio>
-
     <div id="bg-logo"></div>
     <div class="lightning"></div>
 
@@ -78,7 +76,21 @@
         <section class="hero"><h1>SONNYVRO/STVLKING</h1></section>
 
         <main class="main-container">
-            <h2 style="color:#666; font-size: 1rem; letter-spacing: 5px;">SHOP SERVICES</h2>
+            <!-- Availability Toggle -->
+            <div id="status-indicator" style="text-align: center; margin-bottom: 50px; font-family: 'Bebas Neue'; letter-spacing: 2px;">
+                <span id="status-text" style="padding: 5px 15px; border: 1px solid #330; color: #fff;"></span>
+            </div>
+
+            <!-- FOR SALE Showcase -->
+            <h2 style="color:#fff; text-align: center; margin-bottom: 20px; font-family: 'Bebas Neue'; letter-spacing: 3px;">FOR SALE</h2>
+            <div class="shop-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 80px;">
+                <a href="#" class="shop-card" style="text-align: center;"><h3>BEAT TITLE 01</h3></a>
+                <a href="#" class="shop-card" style="text-align: center;"><h3>BEAT TITLE 02</h3></a>
+                <a href="#" class="shop-card" style="text-align: center;"><h3>BEAT TITLE 03</h3></a>
+            </div>
+
+            <!-- Shop Services -->
+            <h2 style="color:#666; font-size: 1rem; letter-spacing: 5px; text-align: center;">SERVICES</h2>
             <div class="shop-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top:40px;">
                 <div class="shop-card" onclick="openModal('Custom Beats', 'Custom made for your vision! Price starts at $50+. Contact me to start.')">
                     <h3>Custom Beats</h3>
@@ -94,6 +106,19 @@
     </div>
 
     <script>
+        // --- SET STATUS HERE (ON or OFF) ---
+        const CURRENT_STATUS = "ON"; 
+        // -----------------------------------
+
+        const statusEl = document.getElementById('status-text');
+        if (CURRENT_STATUS === "ON") {
+            statusEl.innerText = "● ACCEPTING CUSTOM WORK";
+            statusEl.style.color = "#00ff00";
+        } else {
+            statusEl.innerText = "○ CURRENTLY BUSY";
+            statusEl.style.color = "#ff0000";
+        }
+
         function openModal(t, d) {
             document.getElementById('modal-title').innerText = t;
             document.getElementById('modal-desc').innerText = d;
