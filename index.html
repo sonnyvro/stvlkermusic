@@ -11,126 +11,79 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Montserrat', sans-serif; background-color: #020202; color: #888; overflow-x: hidden; cursor: crosshair; }
 
-        /* Ambient Scanline Overlay */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0.03));
-            background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 9996;
-        }
-
-        /* Ambient Elements */
-        @keyframes drift { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
-        .floating-gif { position: fixed; width: 150px; opacity: 0.15; z-index: 0; pointer-events: none; filter: grayscale(1) contrast(1.2); animation: drift 8s ease-in-out infinite; }
-        .gif-left { left: 5%; top: 20%; } .gif-right { right: 5%; top: 60%; }
-
-        /* Lightning */
-        @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.15; } 97% { opacity: 0.05; } }
+        /* Ambient Layers */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0.03)); background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 9996; }
         .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; pointer-events: none; z-index: 9997; animation: lightning 12s linear infinite; }
+        @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.15; } 97% { opacity: 0.05; } }
 
-        /* Flashlight */
-        #flashlight { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; background: radial-gradient(circle 600px at var(--x, 50%) var(--y, 50%), transparent 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.95) 100%); }
-        @media (pointer: coarse) { #flashlight { display: none; } }
+        /* Modal Styles */
+        #service-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100000; justify-content: center; align-items: center; }
+        .modal-content { background: #0a0a0a; padding: 40px; border: 2px solid #e60000; text-align: center; max-width: 500px; color: #fff; }
+        .close-btn { margin-top: 20px; color: #e60000; cursor: pointer; text-transform: uppercase; font-family: 'Bebas Neue'; }
 
-        /* Content Structure */
+        /* Site Content */
         #site-wrapper { position: relative; z-index: 1; }
         .main-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
-        
-        /* UI Elements */
-        #start-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; }
-        .enter-btn { padding: 20px 40px; font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; background: transparent; color: #e60000; border: 2px solid #e60000; cursor: pointer; transition: 0.3s; }
-        .enter-btn:hover { background: #e60000; color: #fff; }
-        
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 10%; background-color: #050505; border-bottom: 2px solid #1a0000; }
-        .news-ticker { background: #e60000; color: #fff; padding: 8px 0; font-family: 'Bebas Neue', sans-serif; overflow: hidden; }
-        .news-ticker p { white-space: nowrap; animation: scrollText 15s linear infinite; }
-        @keyframes scrollText { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
-
-        /* Sections */
+        .shop-card { background: #0a0a0a; border: 1px solid #1a0000; padding: 25px; cursor: pointer; transition: 0.4s; color: #888; text-decoration: none; display: block; }
+        .shop-card:hover { border-color: #e60000; box-shadow: 0 0 20px rgba(230, 0, 0, 0.2); color: #fff; }
         .hero { text-align: center; padding: 150px 20px; background: radial-gradient(circle at center, #1a0000 0%, #020202 70%); }
-        .hero h1 { font-size: 4rem; color: #fff; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 0 10px #e60000; }
-        .music-grid, .shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 40px; }
-        .track-card, .shop-card { background: #0a0a0a; border: 1px solid #1a0000; padding: 25px; transition: 0.4s; }
-        .track-card:hover, .shop-card:hover { border-color: #e60000; box-shadow: 0 0 20px rgba(230, 0, 0, 0.2); }
-        .section-title { font-size: 2rem; color: #fff; border-left: 5px solid #e60000; padding-left: 15px; }
-        .contact-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px; }
-        .contact-item { background: #0a0a0a; padding: 20px; border: 1px solid #e60000; width: 200px; text-align: center; }
-        footer { text-align: center; padding: 40px; border-top: 2px solid #1a0000; }
+        .enter-btn { padding: 15px 30px; font-family: 'Bebas Neue'; font-size: 1.5rem; background: transparent; color: #e60000; border: 2px solid #e60000; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <audio id="bg-audio" loop><source src="thunderstorm.mp3" type="audio/mpeg"></audio>
+    <div id="service-modal">
+        <div class="modal-content">
+            <h2 id="modal-title">Service Details</h2>
+            <p id="modal-desc" style="margin: 20px 0;">Details about the service will appear here.</p>
+            <div class="close-btn" onclick="closeModal()">Close Window</div>
+        </div>
+    </div>
 
-    <div id="start-screen">
+    <div id="start-screen" style="position: fixed; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; justify-content: center; align-items: center;">
         <button class="enter-btn" onclick="startAudio()">ENTER THE VOID</button>
     </div>
 
-    <!-- Effects Layer -->
     <div class="lightning"></div>
-    <div id="flashlight"></div>
-    <img src="wallpaper.gif" class="floating-gif gif-left">
-    <img src="wallpaper.gif" class="floating-gif gif-right">
 
     <div id="site-wrapper">
-        <header>
-            <div class="logo"><img src="logo.png" style="height: 50px;"></div>
-            <nav><ul><li style="display:inline; margin-left:20px;"><a href="#music">Music</a></li><li style="display:inline; margin-left:20px;"><a href="#shop">Shop</a></li></ul></nav>
+        <header style="padding: 20px 10%; border-bottom: 2px solid #1a0000;">
+            <div class="logo" style="font-family: 'Bebas Neue'; font-size: 1.5rem;">SONNYVRO</div>
         </header>
-
-        <div class="news-ticker">
-            <p>>>> NEW TRACK DROPPING SOON // BEATS AVAILABLE FOR LEASE // DM FOR CUSTOM WORK <<<</p>
-        </div>
 
         <section class="hero">
             <h1>SONNYVRO/STVLKING</h1>
-            <a href="#music" class="enter-btn" style="font-size: 1.5rem; padding: 10px 20px;">ENJOY.</a>
         </section>
 
         <main class="main-container">
-            <section id="music">
-                <h2 class="section-title">Fresh Pressed</h2>
-                <div class="music-grid">
-                    <div class="track-card">
-                        <h3>hurt.mp3</h3>
-                        <audio controls style="width:100%; margin-top:20px;"></audio>
+            <h2 style="color:#fff;">Shop Services</h2>
+            <div class="shop-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top:40px;">
+                
+                <div class="shop-card" onclick="openModal('Custom Beats', 'Custom made for your vision! Includes stems and exclusive rights. Price starts at $100+. DM or email to discuss project details.')">
+                    <h3>Custom Beats</h3>
+                </div>
+
+                <a href="https://cash.app/$sonnyvro" target="_blank" style="text-decoration:none;">
+                    <div class="shop-card">
+                        <h3>Premade Beats</h3>
+                        <p style="margin-top:10px; font-size: 0.9rem;">$30 - $50 (Click to purchase - SPECIFY WHICH BEAT)</p>
                     </div>
-                </div>
-            </section>
-
-            <section id="shop" style="margin-top:80px;">
-                <h2 class="section-title">Shop Services</h2>
-                <div class="shop-grid">
-                    <div class="shop-card"><h3>Custom Beats</h3><p>$100+</p></div>
-                    <div class="shop-card"><h3>Premade Beats</h3><p>$30 - $50</p></div>
-                </div>
-            </section>
-
-            <section id="contact" style="margin-top:80px;">
-                <h2 class="section-title">Contact</h2>
-                <div class="contact-grid">
-                    <div class="contact-item"><a href="mailto:sonnyvromusic@gmail.com">Email</a></div>
-                </div>
-            </section>
+                </a>
+            </div>
         </main>
-
-        <footer><p>© 2026 SONNYVRO/STVLKING.</p></footer>
     </div>
 
     <script>
-        const flashlight = document.getElementById('flashlight');
-        const audio = document.getElementById('bg-audio');
-        const startScreen = document.getElementById('start-screen');
-
-        document.addEventListener('mousemove', (e) => {
-            flashlight.style.setProperty('--x', e.clientX + 'px');
-            flashlight.style.setProperty('--y', e.clientY + 'px');
-        });
-
+        function openModal(title, desc) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('service-modal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('service-modal').style.display = 'none';
+        }
         function startAudio() {
-            audio.volume = 0.3;
-            audio.play();
-            startScreen.style.display = 'none';
+            document.getElementById('start-screen').style.display = 'none';
         }
     </script>
 </body>
