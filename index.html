@@ -82,7 +82,7 @@ h1, h2, h3, .logo, .btn {
         nav ul li a:hover {
             color: #e60000;
         }
-
+<li><a href="#contact">Contact</a></li>
         /* Hero Section */
         .hero {
             text-align: center;
@@ -223,6 +223,31 @@ h1, h2, h3, .logo, .btn {
         footer span {
             color: #e60000;
         }
+        .contact-section {
+    padding: 60px 20px;
+    background-color: #0b0b0b;
+    text-align: center;
+}
+.contact-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+.contact-item {
+    background: #111;
+    padding: 20px;
+    border: 1px solid #e60000;
+    border-radius: 5px;
+    width: 200px;
+}
+.contact-item i {
+    font-size: 2rem;
+    color: #e60000;
+    margin-bottom: 10px;
+    display: block;
+}
     </style>
 </head>
 <body>
@@ -306,6 +331,23 @@ h1, h2, h3, .logo, .btn {
     <div class="about-content">
         <img src="logo.png" alt="Artist Profile" class="profile-pic">
         <p> NOISE TO FILL THE VOID </p>
+    </div>
+</section><!-- Contact Section -->
+<section id="contact" class="contact-section">
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-grid">
+        <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <p>email@example.com</p>
+        </div>
+        <div class="contact-item">
+            <i class="fab fa-instagram"></i>
+            <p>@YourInstagram</p>
+        </div>
+        <div class="contact-item">
+            <i class="fab fa-discord"></i>
+            <p>YourDiscordName</p>
+        </div>
     </div>
 </section>
     <footer>
