@@ -11,32 +11,28 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Montserrat', sans-serif; background-color: #050505; color: #d1d1d1; overflow-x: hidden; cursor: crosshair; }
         
-/* Lightning Flash (Subtle) */
-@keyframes lightning {
-    0%, 95%, 98% { opacity: 0; }
-    96% { opacity: 0.15; }
-    97% { opacity: 0.05; }
-}
-
-.lightning {
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%;
-    background: white; 
-    pointer-events: none; 
-    z-index: 9997;
-    /* Added duration and timing */
-    animation: lightning 12s linear infinite; 
-}
+        /* Lightning Flash (Visible on Top) */
+        @keyframes lightning {
+            0%, 95%, 98% { opacity: 0; }
+            96% { opacity: 0.15; }
+            97% { opacity: 0.05; }
+        }
+        .lightning {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; pointer-events: none; z-index: 10001;
+            animation: lightning 12s linear infinite;
+        }
 
         /* Scattered Side GIFs */
         .floating-gif {
-            position: fixed; width: 150px; opacity: 0.3; z-index: 0; pointer-events: none;
+            position: fixed; width: 120px; opacity: 0.3; z-index: 0; pointer-events: none;
         }
         .gif-left { left: 20px; top: 20%; }
         .gif-right { right: 20px; top: 60%; }
+        .gif-top-left { top: 5%; left: 10%; }
+        .gif-top-right { top: 10%; right: 5%; }
+        .gif-bottom-left { bottom: 5%; left: 5%; }
+        .gif-bottom-right { bottom: 10%; right: 15%; }
 
         /* Flashlight Glow */
         #flashlight {
@@ -49,7 +45,6 @@
                 rgba(0, 0, 0, 0.98) 100%
             );
         }
-
         @media (pointer: coarse) { #flashlight { display: none; } }
 
         /* Glitch Effect */
@@ -68,8 +63,8 @@
         .news-ticker p { white-space: nowrap; animation: scrollText 15s linear infinite; }
         @keyframes scrollText { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
 
-        /* Existing UI Elements */
-        #start-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; justify-content: center; align-items: center; }
+        /* UI Elements */
+        #start-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10002; display: flex; justify-content: center; align-items: center; }
         .enter-btn { padding: 20px 40px; font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; background: transparent; color: #e60000; border: 2px solid #e60000; cursor: pointer; transition: 0.3s; }
         .enter-btn:hover { background: #e60000; color: #fff; }
 
@@ -135,8 +130,12 @@
     <div class="content-filter"></div>
     
     <!-- Scattered GIFs -->
-    <img src="wallpaper.gif" class="floating-gif gif-left">
-    <img src="wallpaper.gif" class="floating-gif gif-right">
+    <img src="bone.gif" class="floating-gif gif-left">
+    <img src="crow.gif" class="floating-gif gif-right">
+    <img src="punk.gif" class="floating-gif gif-top-left">
+    <img src="spider.gif" class="floating-gif gif-top-right">
+    <img src="scorp.gif" class="floating-gif gif-bottom-left">
+    <img src="rose.gif" class="floating-gif gif-bottom-right">
 
     <header>
         <div class="logo"><img src="logo.png" alt="Logo" style="height: 50px;"></div>
@@ -241,4 +240,3 @@
     </script>
 </body>
 </html>
-
