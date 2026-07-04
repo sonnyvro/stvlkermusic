@@ -11,7 +11,7 @@
     <style>
         /* --- RESET & BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background-color: #020202; color: #888; overflow-x: hidden; cursor: crosshair; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #020202; color: #aaa; overflow-x: hidden; cursor: crosshair; }
 
         /* --- BACKGROUND FX --- */
         #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; filter: blur(2px) grayscale(100%); opacity: 0.15; }
@@ -25,92 +25,56 @@
         #logo-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('logo.png'); background-repeat: no-repeat; background-position: center; background-size: 40%; opacity: 0.04; z-index: 1; pointer-events: none; filter: blur(2px); }
         .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; pointer-events: none; z-index: 2; animation: lightning 15s linear infinite; }
 
-        /* --- ANIMATIONS --- */
+        /* --- ANIMATIONS & GLOW --- */
         @keyframes rain-move { from { background-position: 0 0; } to { background-position: 100px 1000px; } }
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(230, 0, 0, 0.2); }
-            50% { box-shadow: 0 0 25px rgba(230, 0, 0, 0.4); }
+            0%, 100% { box-shadow: 0 0 10px rgba(230, 0, 0, 0.3), 0 0 20px rgba(230, 0, 0, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(230, 0, 0, 0.5), 0 0 40px rgba(230, 0, 0, 0.3); }
         }
         
-        /* Ghostly Glitch Animation Keyframes */
         @keyframes ghostly-glitch {
-            0%, 100% { text-shadow: 0 0 0 rgba(255,255,255,0); opacity: 1; transform: translateX(0); }
-            25% { text-shadow: -2px 0 5px rgba(255, 255, 255, 0.3), 2px 0 8px rgba(230, 0, 0, 0.4); opacity: 0.8; transform: translateX(-1px); }
-            50% { text-shadow: 2px 0 5px rgba(255, 255, 255, 0.3), -2px 0 8px rgba(230, 0, 0, 0.4); opacity: 0.9; transform: translateX(1px); }
-            75% { text-shadow: -1px 0 3px rgba(255, 255, 255, 0.2), 1px 0 5px rgba(230, 0, 0, 0.3); opacity: 0.7; transform: translateX(0); }
+            0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #e60000; opacity: 1; transform: translateX(0); }
+            25% { text-shadow: -2px 0 5px rgba(255, 255, 255, 0.8), 2px 0 8px rgba(230, 0, 0, 0.9); opacity: 0.8; transform: translateX(-1px); }
+            50% { text-shadow: 2px 0 5px rgba(255, 255, 255, 0.8), -2px 0 8px rgba(230, 0, 0, 0.9); opacity: 0.9; transform: translateX(1px); }
+            75% { text-shadow: -1px 0 3px rgba(255, 255, 255, 0.6), 1px 0 5px rgba(230, 0, 0, 0.7); opacity: 0.7; transform: translateX(0); }
         }
         @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.04; } 97% { opacity: 0.01; } }
 
-        /* Targeted Text Glitch */
+        /* Global Glow for all text */
+        h1, h2, h3, p, span, .nav-btn, .shop-card {
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.4), 0 0 15px rgba(230, 0, 0, 0.5);
+        }
+
         .glitch-text { 
             display: inline-block; 
             animation: ghostly-glitch 2.5s infinite ease-in-out; 
         }
 
         /* --- UI COMPONENTS --- */
-        .content-box { background: #050505; border: 1px solid #330000; padding: 30px; margin: 20px auto; max-width: 800px; color: #aaa; line-height: 1.6; animation: pulse-glow 4s infinite ease-in-out; }
+        .content-box { background: #050505; border: 1px solid #550000; padding: 30px; margin: 20px auto; max-width: 800px; color: #fff; line-height: 1.6; animation: pulse-glow 4s infinite ease-in-out; }
         
-        /* 3D Flip Layout */
-        #content-flipper {
-            transform-style: preserve-3d;
-            transform-origin: center center;
-            width: 100%;
-        }
+        #content-flipper { transform-style: preserve-3d; transform-origin: center center; width: 100%; }
         .page-section { display: none; }
         .active { display: block; }
         
-        .nav-btn { background: transparent; border: 1px solid #444; color: #888; padding: 10px 20px; font-family: 'Bebas Neue'; cursor: pointer; margin: 10px; transition: 0.3s; }
-        .nav-btn:hover { border-color: #fff; color: #fff; }
+        .nav-btn { background: transparent; border: 1px solid #666; color: #fff; padding: 10px 20px; font-family: 'Bebas Neue'; cursor: pointer; margin: 10px; transition: 0.3s; }
+        .nav-btn:hover { border-color: #e60000; color: #fff; box-shadow: 0 0 15px #e60000; }
 
-        /* Box Buttons Styling */
         .shop-card { 
-            background: #050505; 
-            border: 1px solid #330000; 
-            padding: 15px 20px; 
-            cursor: pointer; 
-            transition: 0.4s; 
-            color: #888; 
-            text-decoration: none; 
-            display: flex; 
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 180px; 
-            min-height: 70px;
-            animation: pulse-glow 4s infinite ease-in-out; 
-            text-align: center;
+            background: #050505; border: 1px solid #550000; padding: 15px 20px; cursor: pointer; transition: 0.4s; color: #fff; text-decoration: none; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 180px; min-height: 70px; animation: pulse-glow 4s infinite ease-in-out; text-align: center;
         }
-        .shop-card:hover { border-color: #e60000; background: #080505; color: #fff; box-shadow: 0 0 20px rgba(230, 0, 0, 0.5); }
+        .shop-card:hover { border-color: #e60000; background: #080505; box-shadow: 0 0 30px rgba(230, 0, 0, 0.6); }
 
-        .enter-btn { padding: 15px 30px; font-family: 'Bebas Neue'; font-size: 1.5rem; background: transparent; color: #e60000; border: 1px solid #e60000; cursor: pointer; }
+        .enter-btn { padding: 15px 30px; font-family: 'Bebas Neue'; font-size: 1.5rem; background: transparent; color: #e60000; border: 2px solid #e60000; cursor: pointer; box-shadow: 0 0 20px rgba(230,0,0,0.5); }
+        .enter-btn:hover { background: #e60000; color: #000; }
 
         /* --- MODAL --- */
         #service-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100000; justify-content: center; align-items: center; }
-        .modal-content { background: #0a0a0a; padding: 40px; border: 1px solid #330000; text-align: center; max-width: 500px; color: #fff; }
-        .close-btn { margin-top: 20px; color: #e60000; cursor: pointer; text-transform: uppercase; font-family: 'Bebas Neue'; }
+        .modal-content { background: #0a0a0a; padding: 40px; border: 1px solid #e60000; text-align: center; max-width: 500px; color: #fff; box-shadow: 0 0 50px rgba(230,0,0,0.3); }
+        .close-btn { margin-top: 20px; color: #e60000; cursor: pointer; text-transform: uppercase; font-family: 'Bebas Neue'; font-weight: bold; }
         
-        /* New Image Box */
-        .image-box {
-            background: #050505; 
-            border: 1px solid #330000; 
-            padding: 15px; 
-            margin: 20px auto; 
-            max-width: 800px; 
-            text-align: center;
-            animation: pulse-glow 4s infinite ease-in-out;
-        }
-        .image-box img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #1a0000;
-            opacity: 0.8;
-            filter: grayscale(50%);
-            transition: 0.4s;
-        }
-        .image-box img:hover {
-            opacity: 1;
-            filter: grayscale(0%);
-        }
+        .image-box { background: #050505; border: 1px solid #550000; padding: 15px; margin: 20px auto; max-width: 800px; text-align: center; animation: pulse-glow 4s infinite ease-in-out; }
+        .image-box img { max-width: 100%; height: auto; border: 1px solid #330000; transition: 0.4s; }
     </style>
 </head>
 <body>
@@ -130,17 +94,16 @@
     </div>
 
     <div id="start-screen" style="position: fixed; width: 100%; height: 100%; background: #000; z-index: 99999; display: flex; justify-content: center; align-items: center;">
-        <button class="enter-btn" onclick="startAudio()">enter...</button>
+        <button class="enter-btn" onclick="startAudio()">ENTER</button>
     </div>
 
     <div id="site-wrapper">
-        
         <section class="hero" style="text-align: center; padding-top: 50px; padding-bottom: 10px;">
             <h1 class="glitch-text" style="font-size: 3.5rem; letter-spacing: 5px;">SONNYVRO/STVLKING</h1>
         </section>
 
-        <header style="padding: 10px 10%; border-bottom: 1px solid #1a0000; text-align: center; margin-bottom: 40px;">
-            <div id="now-playing-text" class="logo glitch-text" style="font-family: 'Bebas Neue'; font-size: 1.2rem; letter-spacing: 2px; color: #666;"> Now Playing - THANKXSOMUCH by thornskin </div>
+        <header style="padding: 10px 10%; border-bottom: 1px solid #330000; text-align: center; margin-bottom: 40px;">
+            <div id="now-playing-text" class="logo glitch-text" style="font-family: 'Bebas Neue'; font-size: 1.2rem; letter-spacing: 2px;"> Now Playing - THANKXSOMUCH by thornskin </div>
         </header>
 
         <main class="main-container" style="perspective: 1200px;">
@@ -158,17 +121,19 @@
                     <div style="display: flex; justify-content: center; margin-bottom: 80px;">
                         <a href="https://air.bi/nXZu4" target="_blank" class="shop-card"><h3 class="glitch-text">STOCK</h3></a>
                     </div>
-                    <div style="text-align: center;"><h2 class="glitch-text" style="color:#666; font-size: 1rem; letter-spacing: 5px;">SERVICES</h2></div>
+                    <div style="text-align: center;"><h2 class="glitch-text" style="color:#fff; font-size: 1rem; letter-spacing: 5px;">SERVICES</h2></div>
                     
                     <div class="shop-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top:40px;">
-                        <div class="shop-card" onclick="openModal('Custom Beats', 'custom made for your vision! price starts at $50+. contact me to start.')">
+                        <div class="shop-card" onclick="openModal('Custom Beats', 'custom made for your vision!
+                                                                                     price starts at $50+.
+                                                                                    contact me to start.')">
                             <h3 class="glitch-text">Custom Beats</h3>
-                            <p style="margin-top:10px; font-size: 0.7rem; opacity: 0.6;">$50+ (Click for details)</p>
+                            <p style="margin-top:10px; font-size: 0.7rem;">$50+ (Click for details)</p>
                         </div>
                         <a href="https://cash.app/$sonnyvro" target="_blank" style="text-decoration:none;">
                             <div class="shop-card">
                                 <h3 class="glitch-text">Premade Beats</h3>
-                                <p style="margin-top:10px; font-size: 0.7rem; opacity: 0.6;">$30 - $50 (SPECIFY WHICH BEAT BEFORE PAYING)</p>
+                                <p style="margin-top:10px; font-size: 0.7rem;">$30 - $50 (SPECIFY WHICH BEAT BEFORE PAYING)</p>
                             </div>
                         </a>
                     </div>
@@ -178,8 +143,9 @@
                     <div class="content-box">
                         <h2 class="glitch-text" style="color: #fff; font-family: 'Bebas Neue'; margin-bottom: 15px;">WHO AM I?</h2>
                         <br><br>
-                        <p class="glitch-text">Welcome to my corner of the web. I specialize in crafting dark, atmospheric soundscapes and custom beats.</p><br>
-                        <p class="glitch-text">If you're looking for something specific, contact me for custom projects.</p>
+                        <p class="glitch-text">hi im sonny. im currently 21 as this website comes out. ive been producing for around a year
+                            and specialize in crafting dark, atmospheric soundscapes and custom beats.</p><br>
+                        <p class="glitch-text">if you're looking for something specific, contact me for custom projects!</p>
                     </div>
                     
                     <div class="image-box">
@@ -191,68 +157,40 @@
     </div>
 
     <script>
-        // --- SONG CONFIGURATION ---
         const pageTracks = {
-            'home-section': {
-                file: 'THANKXSOMUCH.mp3',
-                title: 'Now Playing - THANKXSOMUCH by thornskin'
-            },
-            'about-section': {
-                file: 'letmefall.mp3', // <-- REPLACE WITH YOUR ABOUT ME SONG FILE
-                title: 'Now Playing - Let Me Fall by sonnyvro' // <-- REPLACE WITH SONG TITLE
-            }
+            'home-section': { file: 'killing.mp3', title: 'Now Playing - killing (instrumental) by sonnyvro' },
+            'about-section': { file: 'letmefall.mp3', title: 'Now Playing - Let Me Fall by sonnyvro' }
         };
-
         const audio = document.getElementById('bg-audio');
         const nowPlayingDisplay = document.getElementById('now-playing-text');
-        
-        // Set initial song
         audio.src = pageTracks['home-section'].file;
         nowPlayingDisplay.innerText = pageTracks['home-section'].title;
-
         const CURRENT_STATUS = "ON"; 
         const statusEl = document.getElementById('status-text');
-        if (CURRENT_STATUS === "ON") {
-            statusEl.innerText = "● ACCEPTING CUSTOM WORK";
-            statusEl.style.color = "#00ff00";
-        } else {
-            statusEl.innerText = "○ CURRENTLY BUSY";
-            statusEl.style.color = "#ff0000";
-        }
-
+        if (CURRENT_STATUS === "ON") { statusEl.innerText = "● ACCEPTING CUSTOM WORK"; statusEl.style.color = "#00ff00"; } 
+        else { statusEl.innerText = "○ CURRENTLY BUSY"; statusEl.style.color = "#ff0000"; }
         function showPage(pageId) {
             const targetSection = document.getElementById(pageId);
             if (targetSection.classList.contains('active')) return;
-
             const flipper = document.getElementById('content-flipper');
-            
             flipper.style.transition = 'transform 0.4s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
             flipper.style.transform = 'rotateX(90deg)';
-            
             setTimeout(() => {
                 document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
                 targetSection.classList.add('active');
-                
-                // --- SWITCH SONG LOGIC ---
                 if (pageTracks[pageId]) {
-                    const wasPlaying = !audio.paused; // Check if music is currently unmuted/playing
+                    const wasPlaying = !audio.paused;
                     audio.src = pageTracks[pageId].file;
                     nowPlayingDisplay.innerText = pageTracks[pageId].title;
-                    if (wasPlaying) {
-                        audio.play(); // Keep playing if they had it playing
-                    }
+                    if (wasPlaying) audio.play();
                 }
-
                 flipper.style.transition = 'none';
                 flipper.style.transform = 'rotateX(-90deg)';
-                
                 void flipper.offsetWidth;
-                
                 flipper.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 flipper.style.transform = 'rotateX(0deg)';
-            }, 400); // Happens exactly as the page flips out of view
+            }, 400);
         }
-
         document.addEventListener('click', function(e) {
             const crack = document.createElement('div');
             crack.className = 'crack-mark';
@@ -262,21 +200,13 @@
             document.getElementById('cracks-container').appendChild(crack);
             setTimeout(() => { crack.style.transition = "opacity 2s"; crack.style.opacity = "0"; setTimeout(() => crack.remove(), 2000); }, 3000);
         });
-
         function openModal(t, d) {
             document.getElementById('modal-title').innerText = t;
             document.getElementById('modal-desc').innerText = d;
             document.getElementById('service-modal').style.display = 'flex';
         }
-
         function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
-
-        function startAudio() {
-            audio.volume = 0.3; 
-            audio.play();
-            document.getElementById('start-screen').style.display = 'none';
-        }
+        function startAudio() { audio.volume = 0.3; audio.play(); document.getElementById('start-screen').style.display = 'none'; }
     </script>
 </body>
 </html>
- 
