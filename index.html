@@ -66,7 +66,7 @@
         .shop-card { 
             background: #050505; 
             border: 1px solid #330000; 
-            padding: 15px 20px; /* Reduced padding for a tighter fit */
+            padding: 15px 20px; 
             cursor: pointer; 
             transition: 0.4s; 
             color: #888; 
@@ -75,7 +75,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 180px; /* Fixed button-like width */
+            width: 180px; 
             min-height: 70px;
             animation: pulse-glow 4s infinite ease-in-out; 
             text-align: center;
@@ -88,6 +88,29 @@
         #service-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100000; justify-content: center; align-items: center; }
         .modal-content { background: #0a0a0a; padding: 40px; border: 1px solid #330000; text-align: center; max-width: 500px; color: #fff; }
         .close-btn { margin-top: 20px; color: #e60000; cursor: pointer; text-transform: uppercase; font-family: 'Bebas Neue'; }
+        
+        /* New Image Box */
+        .image-box {
+            background: #050505; 
+            border: 1px solid #330000; 
+            padding: 15px; 
+            margin: 20px auto; 
+            max-width: 800px; 
+            text-align: center;
+            animation: pulse-glow 4s infinite ease-in-out;
+        }
+        .image-box img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #1a0000;
+            opacity: 0.8;
+            filter: grayscale(50%);
+            transition: 0.4s;
+        }
+        .image-box img:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+        }
     </style>
 </head>
 <body>
@@ -111,11 +134,14 @@
     </div>
 
     <div id="site-wrapper">
-        <header style="padding: 20px 10%; border-bottom: 1px solid #1a0000;">
-            <div class="logo glitch-text" style="font-family: 'Bebas Neue'; font-size: 1.5rem; letter-spacing: 2px;"> Now Playing - THANKXSOMUCH by thornskin </div>
-        </header>
+        
+        <section class="hero" style="text-align: center; padding-top: 50px; padding-bottom: 10px;">
+            <h1 class="glitch-text" style="font-size: 3.5rem; letter-spacing: 5px;">SONNYVRO/STVLKING</h1>
+        </section>
 
-        <section class="hero"><h1 class="glitch-text">SONNYVRO/STVLKING</h1></section>
+        <header style="padding: 10px 10%; border-bottom: 1px solid #1a0000; text-align: center; margin-bottom: 40px;">
+            <div class="logo glitch-text" style="font-family: 'Bebas Neue'; font-size: 1.2rem; letter-spacing: 2px; color: #666;"> Now Playing - THANKXSOMUCH by thornskin </div>
+        </header>
 
         <main class="main-container" style="perspective: 1200px;">
             <div style="text-align: center; margin-bottom: 40px;">
@@ -146,6 +172,10 @@
                         <br><br>
                         <p class="glitch-text">Welcome to my corner of the web. I specialize in crafting dark, atmospheric soundscapes and custom beats.</p><br>
                         <p class="glitch-text">If you're looking for something specific, contact me for custom projects.</p>
+                    </div>
+                    
+                    <div class="image-box">
+                        <img src="https://via.placeholder.com/800x400/111111/333333?text=YOUR+IMAGE+HERE" alt="About Me Image">
                     </div>
                 </div>
             </div>
