@@ -4,25 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sonnyvro | stvlking</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
         body { font-family: 'Montserrat', sans-serif; background-color: #020202; color: #888; overflow-x: hidden; cursor: crosshair; }
 
-        /* Ambient Layers */
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0.03)); background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 9996; }
-        .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; pointer-events: none; z-index: 9997; animation: lightning 12s linear infinite; }
-        @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.15; } 97% { opacity: 0.05; } }
+        /* The Ghastly Follow-Mouse Glow */
+        #cursor-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998;
+            background: radial-gradient(circle 350px at var(--x, 50%) var(--y, 50%), rgba(230, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.95) 80%);
+        }
 
-        /* Modal Styles */
+        /* Giant Background Logo */
+        #bg-logo {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('logo.png');
+            background-repeat: no-repeat; background-position: center; background-size: 50%;
+            opacity: 0.05; z-index: 0; pointer-events: none;
+        }
+
+        /* Ambient Layers */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 0, 0, 0.03)); background-size: 100% 4px, 3px 100%; pointer-events: none; z-index: 1; }
+        .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; pointer-events: none; z-index: 2; animation: lightning 12s linear infinite; }
+        @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.05; } 97% { opacity: 0.02; } }
+
+        /* UI */
         #service-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100000; justify-content: center; align-items: center; }
         .modal-content { background: #0a0a0a; padding: 40px; border: 2px solid #e60000; text-align: center; max-width: 500px; color: #fff; }
         .close-btn { margin-top: 20px; color: #e60000; cursor: pointer; text-transform: uppercase; font-family: 'Bebas Neue'; }
-
-        /* Site Content */
-        #site-wrapper { position: relative; z-index: 1; }
+        
+        #site-wrapper { position: relative; z-index: 3; }
         .main-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
         .shop-card { background: #0a0a0a; border: 1px solid #1a0000; padding: 25px; cursor: pointer; transition: 0.4s; color: #888; text-decoration: none; display: block; }
         .shop-card:hover { border-color: #e60000; box-shadow: 0 0 20px rgba(230, 0, 0, 0.2); color: #fff; }
@@ -32,11 +43,18 @@
 </head>
 <body>
 
+    <audio id="bg-audio" loop><source src="thunderstorm.mp3" type="audio/mpeg"></audio>
+
+    <!-- Visual Effects -->
+    <div id="bg-logo"></div>
+    <div class="lightning"></div>
+    <div id="cursor-glow"></div>
+
     <div id="service-modal">
         <div class="modal-content">
             <h2 id="modal-title">Service Details</h2>
-            <p id="modal-desc" style="margin: 20px 0;">Details about the service will appear here.</p>
-            <div class="close-btn" onclick="closeModal()">Close Window</div>
+            <p id="modal-desc" style="margin: 20px 0;"></p>
+            <div class="close-btn" onclick="closeModal()">Close</div>
         </div>
     </div>
 
@@ -44,29 +62,23 @@
         <button class="enter-btn" onclick="startAudio()">ENTER THE VOID</button>
     </div>
 
-    <div class="lightning"></div>
-
     <div id="site-wrapper">
         <header style="padding: 20px 10%; border-bottom: 2px solid #1a0000;">
             <div class="logo" style="font-family: 'Bebas Neue'; font-size: 1.5rem;">SONNYVRO</div>
         </header>
 
-        <section class="hero">
-            <h1>SONNYVRO/STVLKING</h1>
-        </section>
+        <section class="hero"><h1>SONNYVRO/STVLKING</h1></section>
 
         <main class="main-container">
             <h2 style="color:#fff;">Shop Services</h2>
             <div class="shop-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top:40px;">
-                
-                <div class="shop-card" onclick="openModal('Custom Beats', 'Custom made for your vision! Includes stems and exclusive rights. Price starts at $100+. DM or email to discuss project details.')">
+                <div class="shop-card" onclick="openModal('Custom Beats', 'Custom made for your vision! Price starts at $50+. Contact me to start! discounts with bulk purchases.')">
                     <h3>Custom Beats</h3>
                 </div>
-
                 <a href="https://cash.app/$sonnyvro" target="_blank" style="text-decoration:none;">
                     <div class="shop-card">
                         <h3>Premade Beats</h3>
-                        <p style="margin-top:10px; font-size: 0.9rem;">$30 - $50 (Click to purchase - SPECIFY WHICH BEAT)</p>
+                        <p style="margin-top:10px; font-size: 0.9rem;">$30 - $50 (Click to purchase)</p>
                     </div>
                 </a>
             </div>
@@ -74,19 +86,24 @@
     </div>
 
     <script>
-        function openModal(title, desc) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = desc;
+        // Track mouse movement for the glow effect
+        document.addEventListener('mousemove', e => {
+            document.documentElement.style.setProperty('--x', `${e.clientX}px`);
+            document.documentElement.style.setProperty('--y', `${e.clientY}px`);
+        });
+
+        function openModal(t, d) {
+            document.getElementById('modal-title').innerText = t;
+            document.getElementById('modal-desc').innerText = d;
             document.getElementById('service-modal').style.display = 'flex';
         }
-        function closeModal() {
-            document.getElementById('service-modal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('service-modal').style.display = 'none'; }
         function startAudio() {
+            const audio = document.getElementById('bg-audio');
+            audio.volume = 0.3;
+            audio.play();
             document.getElementById('start-screen').style.display = 'none';
         }
     </script>
 </body>
 </html>
-
- 
