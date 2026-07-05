@@ -13,78 +13,90 @@
             --text: #e0a0a0;
         }
 
-        body { 
-            background-color: var(--bg) !important; 
-            color: var(--text) !important; 
-            font-family: 'VT323', monospace; 
-            margin: 0;
-            overflow-x: hidden;
-            perspective: 1000px;
-        }
+        body { background-color: var(--bg) !important; color: var(--text) !important; font-family: 'VT323', monospace; margin: 0; overflow-x: hidden; }
 
-        /* 3D Viewport Setup */
-        #viewport { width: 100vw; min-height: 100vh; }
-        #camera { width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* Rain Layer - Stays behind the content */
+        #rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
-        /* The Stacked Layout */
-        .layout-stack {
-            display: grid;
-            grid-template-columns: 1fr; /* Single column stack */
-            gap: 40px; /* Large gaps for "breathing room" */
-            max-width: 700px; /* Keeps the "document" look narrow */
-            margin: 60px auto;
-            padding: 20px;
-        }
-
-        header { text-align: center; margin-bottom: 20px; }
+        #viewport { position: relative; z-index: 2; width: 100vw; min-height: 100vh; }
+        .layout-stack { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 700px; margin: 60px auto; padding: 20px; }
+        
+        header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); }
         h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; }
 
-        /* BIGGER BOXES */
-        .box { 
-            border: 1px solid var(--red); 
-            background: var(--panel); 
-            padding: 30px; 
-            min-height: 350px; /* Much taller */
-            position: relative;
-        }
-
-        /* The Roof Effect */
-        .box::before { 
-            content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; 
-            background: var(--red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%);
-        }
-
+        .box { border: 1px solid var(--red); background: var(--panel); padding: 30px; min-height: 350px; position: relative; }
+        .box::before { content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; background: var(--red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%); }
         .box-title { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--red); margin-bottom: 20px; border-bottom: 1px solid var(--dim-red); padding-bottom: 10px; }
-
-        .home-btn { 
-            background: transparent; border: 2px solid var(--red); 
-            color: var(--red); padding: 20px; cursor: pointer; font-family: 'Press Start 2P';
-            font-size: 1rem; width: 100%; margin-bottom: 100px;
-        }
+        
+        .home-btn { background: transparent; border: 2px solid var(--red); color: var(--red); padding: 20px; cursor: pointer; font-family: 'Press Start 2P'; font-size: 1rem; width: 100%; }
         .home-btn:hover { background: var(--red); color: black; }
     </style>
 </head>
 <body>
 
-    <div id="viewport">
-        <div id="camera">
-            <main class="layout-stack">
-                <header>
-                    <h1>SONNYVRO // STVLKING</h1>
-                </header>
+    <canvas id="rain-canvas"></canvas>
 
-                <section class="box"><div class="box-title">STVLKER</div><p>Content goes here...</p></section>
-                <section class="box"><div class="box-title">SONNYVRO</div><p>Content goes here...</p></section>
-                <section class="box"><div class="box-title">PICS</div><p>Content goes here...</p></section>
-                <section class="box"><div class="box-title">BLOG</div><p>Content goes here...</p></section>
-                <section class="box"><div class="box-title">BEATS FOR SALE</div><p>Content goes here...</p></section>
-                <section class="box"><div class="box-title">LINKS</div><p>Content goes here...</p></section>
-                
-                <button class="home-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">[ RETURN HOME ]</button>
-            </main>
-        </div>
+    <div id="viewport">
+        <main class="layout-stack">
+            <header id="main-header">
+                <h1>SONNYVRO // STVLKING</h1>
+            </header>
+
+            <section class="box"><div class="box-title">STVLKER</div></section>
+            <section class="box"><div class="box-title">SONNYVRO</div></section>
+            <section class="box"><div class="box-title">PICS</div></section>
+            <section class="box"><div class="box-title">BLOG</div></section>
+            <section class="box"><div class="box-title">BEATS FOR SALE</div></section>
+            <section class="box"><div class="box-title">LINKS</div></section>
+            
+            <button class="home-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">[ RETURN HOME ]</button>
+        </main>
     </div>
 
+    <script>
+        const canvas = document.getElementById('rain-canvas');
+        const ctx = canvas.getContext('2d');
+        const header = document.getElementById('main-header');
+
+        // Resize canvas to match screen
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.onresize = resize; resize();
+
+        let drops = [];
+        function createDrop() {
+            return {
+                x: Math.random() * canvas.width,
+                y: -10,
+                speed: 2 + Math.random() * 3,
+                stopped: false
+            };
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#ff0000'; // Red pixel rain
+
+            // Get header position for collision
+            const headRect = header.getBoundingClientRect();
+
+            if (drops.length < 100) drops.push(createDrop());
+
+            drops.forEach(d => {
+                // If drop hits header top, stop it
+                if (!d.stopped && d.y >= headRect.top && d.x > headRect.left && d.x < headRect.right) {
+                    d.stopped = true;
+                }
+
+                if (!d.stopped) d.y += d.speed;
+                ctx.fillRect(d.x, d.y, 2, 6); // Pixelated rain shape
+
+                // Reset drop if it goes off screen
+                if (d.y > canvas.height) d.y = -10;
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
  
