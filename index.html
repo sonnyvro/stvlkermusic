@@ -45,16 +45,17 @@
         .layout-stack { display: grid; grid-template-columns: 1fr; gap: 25px; max-width: 600px; margin: 40px auto; padding: 20px; }
         header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); }
         
+        /* Neon Flickers */
         h1, .divider span { font-family: 'Press Start 2P'; color: var(--red); margin: 0; animation: neonFlicker 4s infinite; }
         h1 { font-size: 2rem; }
+        .divider span { font-size: 0.7rem; }
 
         @keyframes neonFlicker {
             0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; text-shadow: 0 0 2px var(--red), 0 0 8px var(--red); }
             20%, 24%, 55% { opacity: 0.75; text-shadow: none; }
         }
 
-        /* Divider Style */
-        .divider { display: flex; align-items: center; text-align: center; font-size: 0.7rem; margin: 20px 0; }
+        .divider { display: flex; align-items: center; text-align: center; margin: 20px 0; }
         .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--red); }
         .divider:not(:empty)::before { margin-right: 15px; }
         .divider:not(:empty)::after { margin-left: 15px; }
@@ -91,9 +92,7 @@
     <div id="viewport">
         <div id="camera">
             <main class="layout-stack">
-                <header id="main-header">
-                    <h1>SONNYVRO // STVLKING</h1>
-                </header>
+                <header><h1>SONNYVRO // STVLKING</h1></header>
 
                 <section class="box">
                     <div class="box-title">STVLKER</div>
@@ -103,7 +102,7 @@
                 <section class="box">
                     <div class="box-title">SONNYVRO</div>
                     <p><strong>Alias:</strong> Sonny // <strong>Status:</strong> Coding</p>
-                    <p>Gloomy, dark, atmospheric vibes.</p>
+                    <p>Growing up listening to music every second of the day really helps me when creating as i never really run out of ideas. I excel in dark, atmospheric, and gloomy vibes while also recording alternative rock, dark trap, and indie music.</p>
                 </section>
 
                 <section class="box">
@@ -123,14 +122,11 @@
                         </div>
                     </div>
                     <ul class="tracklist">
-                        <li class="track" data-src="music/widow.mp3">
-                            <span class="play-btn">[ PLAY ]</span> <span class="track-name">widow.mp3</span>
-                        </li>
-                        <li class="track" data-src="music/error.mp3">
-                            <span class="play-btn">[ PLAY ]</span> <span class="track-name">error.mp3</span>
-                        </li>
+                        <li class="track" data-src="music/widow.mp3"><span class="play-btn">[ PLAY ]</span> <span class="track-name">widow.mp3</span></li>
+                        <li class="track" data-src="music/error.mp3"><span class="play-btn">[ PLAY ]</span> <span class="track-name">error.mp3</span></li>
+                        <li class="track" data-src="music/killing.mp3"><span class="play-btn">[ PLAY ]</span> <span class="track-name">killing.mp3</span></li>
                     </ul>
-                    <a href="https://air.bi/nXZu4" target="_blank" class="nav-link airbit-link">> ACCESS FULL AIRBIT STORE</a>
+                    <a href="https://air.bi/nXZu4" target="_blank" class="airbit-link">> ACCESS FULL AIRBIT STORE</a>
                 </section>
 
                 <section class="box">
@@ -168,6 +164,8 @@
     const audioEngine = new Audio();
     const nowPlayingText = document.getElementById('now-playing');
     const volumeSlider = document.getElementById('vol-slider');
+    
+    // Initialize volume correctly
     audioEngine.volume = volumeSlider.value;
     volumeSlider.addEventListener('input', function() { audioEngine.volume = this.value; });
 
