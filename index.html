@@ -5,16 +5,27 @@
     <title>SONNYVRO // STVLKING</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
+        /* 1. STRICT COLOR PALETTE */
         :root {
             --bg: #000000;
-            --panel: rgba(10, 0, 0, 0.85);
+            --panel: rgba(10, 0, 0, 0.85); /* Dark transparent red/black */
             --red: #ff0000;
             --dim-red: #330000;
             --text: #e0a0a0;
         }
 
+        /* 2. THE DIMMED WALLPAPER */
         body { 
-            background-color: var(--bg) !important; 
+            background-color: #000000 !important; /* Strict fallback */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                url('wallpaper.jpg'); /* CHANGE THIS TO YOUR EXACT FILE NAME */
+            
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            
             color: var(--text) !important; 
             font-family: 'VT323', monospace; 
             margin: 0; 
@@ -22,43 +33,67 @@
             perspective: 1000px;
         }
 
-        /* 1. WALLPAPER (Back Layer) */
-        body {
-            background-image: url('citay.jpg'); /* REPLACE WITH YOUR IMAGE */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* 2. CLOUD LAYER (Mid Layer) */
+        /* 3. THE UNAFFECTED CLOUD LAYER */
         #clouds-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('clouds.png'); /* REPLACE WITH YOUR CLOUD IMAGE */
+            background-image: url('clouds.png'); /* CHANGE THIS TO YOUR EXACT FILE NAME */
             background-repeat: repeat-x;
-            opacity: 0.6;
+            opacity: 0.7; 
             z-index: 1;
             pointer-events: none;
-            animation: cloudDrift 100s linear infinite;
+            animation: cloudDrift 120s linear infinite;
         }
         @keyframes cloudDrift { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        /* 3. RAIN LAYER (Front Layer) */
+        /* 4. RAIN & CAMERA */
         #rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-
-        /* 4. CONTENT (Top Layer) */
         #viewport { position: relative; z-index: 3; width: 100vw; min-height: 100vh; }
         #camera { width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        .layout-stack { display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 700px; margin: 60px auto; padding: 20px; }
-        header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); }
-        h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; margin: 0; }
+        .pan-left { transform: rotateY(90deg) translateZ(200px); opacity: 0; }
+        .pan-right { transform: rotateY(-90deg) translateZ(200px); opacity: 0; }
+        .pan-up { transform: rotateX(-90deg) translateZ(200px); opacity: 0; }
+        .pan-down { transform: rotateX(90deg) translateZ(200px); opacity: 0; }
 
-        .box { border: 1px solid var(--red); background: var(--panel); padding: 30px; min-height: 350px; position: relative; }
-        .box::before { content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; background: var(--red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%); }
-        .box-title { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--red); margin-bottom: 20px; border-bottom: 1px solid var(--dim-red); padding-bottom: 10px; }
+        /* 5. STACK LAYOUT & BOXES */
+        .layout-stack { display: grid; grid-template-columns: 1fr; gap: 25px; max-width: 600px; margin: 40px auto; padding: 20px; }
         
-        .home-btn { background: transparent; border: 2px solid var(--red); color: var(--red); padding: 20px; cursor: pointer; font-family: 'Press Start 2P'; font-size: 1rem; width: 100%; margin-bottom: 100px; }
-        .home-btn:hover { background: var(--red); color: black; }
+        header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); }
+        
+        /* 6. NEON FLICKER TEXT */
+        h1 { 
+            font-family: 'Press Start 2P'; 
+            color: var(--red); 
+            font-size: 2rem; 
+            margin: 0; 
+            animation: neonFlicker 4s infinite; 
+        }
+
+        @keyframes neonFlicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { 
+                opacity: 1; 
+                text-shadow: 
+                    0 0 4px #ffffff, 
+                    0 0 10px var(--red), 
+                    0 0 20px var(--red), 
+                    0 0 40px var(--red), 
+                    0 0 80px var(--red); 
+            }
+            20%, 24%, 55% { 
+                opacity: 0.3; 
+                text-shadow: none; 
+            }
+        }
+
+        .box { border: 1px solid var(--dim-red); background: var(--panel); padding: 25px; min-height: 200px; position: relative; }
+        .box::before { content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; background: var(--dim-red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%); }
+        .box-title { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--red); margin-bottom: 20px; border-bottom: 1px solid var(--dim-red); padding-bottom: 10px; }
+
+        .links a { display: block; color: var(--text); text-decoration: none; margin: 10px 0; }
+        .links a:hover { color: var(--red); padding-left: 5px; }
+
+        .home-btn { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 20px; cursor: pointer; font-family: 'Press Start 2P'; font-size: 0.8rem; transition: 0.3s; width: 100%; margin-bottom: 100px; }
+        .home-btn:hover { background: var(--red); color: #000000; }
     </style>
 </head>
 <body>
@@ -77,8 +112,8 @@
                 <section class="box"><div class="box-title">SONNYVRO</div></section>
                 <section class="box"><div class="box-title">PICS</div></section>
                 <section class="box"><div class="box-title">BLOG</div></section>
-                <section class="box"><div class="box-title">BEATS FOR SALE</div></section>
-                <section class="box"><div class="box-title">LINKS</div></section>
+                <section class="box"><div class="box-title">BEATS FOR SALE</div><a href="#" class="nav-link" data-dir="pan-right">AIRBIT LINK</a></section>
+                <section class="box"><div class="box-title">LINKS</div><nav class="links"><a href="#">DISCORD</a><a href="#">TWITTER</a></nav></section>
                 
                 <button class="home-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">[ RETURN HOME ]</button>
             </main>
@@ -86,7 +121,7 @@
     </div>
 
     <script>
-        // Rain logic
+        // Rain collision logic
         const canvas = document.getElementById('rain-canvas');
         const ctx = canvas.getContext('2d');
         const header = document.getElementById('main-header');
@@ -97,7 +132,7 @@
         function createDrop() { return { x: Math.random() * canvas.width, y: -10, speed: 2 + Math.random() * 3, stopped: false }; }
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#ff0000';
+            ctx.fillStyle = '#ff0000'; // Red pixel rain
             const headRect = header.getBoundingClientRect();
             if (drops.length < 100) drops.push(createDrop());
             drops.forEach(d => {
@@ -109,6 +144,16 @@
             requestAnimationFrame(animate);
         }
         animate();
+
+        // 3D Camera Pan logic
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const camera = document.getElementById('camera');
+                camera.classList.add(this.getAttribute('data-dir'));
+                setTimeout(() => { window.location.href = this.getAttribute('href'); }, 1200);
+            });
+        });
     </script>
 </body>
 </html>
