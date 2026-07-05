@@ -126,17 +126,19 @@ left:0;
 width:200%;
 height:320px;
 
-background:url("../assets/clouds.png") repeat-x;
+background:url("../images/clouds.png") repeat-x;
 
 background-size:auto 100%;
 
-opacity:.65;
+image-rendering:pixelated;
 
-pointer-events:none;
+opacity:.45;
 
 z-index:2;
 
 animation:cloudScroll 90s linear infinite;
+
+pointer-events:none;
 
 }
 
