@@ -9,10 +9,9 @@
 
 /* 2. THE DIMMED WALLPAPER */
 body { 
-    /* The linear-gradient acts as a shadow filter over your image */
     background-image: 
         linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-        url('wallpaper.jpg'); /* REPLACE WITH YOUR IMAGE */
+        url('wallpaper.jpg');
     
     background-size: cover;
     background-position: center;
@@ -30,9 +29,9 @@ body {
 /* 3. THE UNAFFECTED CLOUD LAYER */
 #clouds-layer {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('clouds.png'); /* REPLACE WITH YOUR CLOUD IMAGE */
+    background-image: url('clouds.png');
     background-repeat: repeat-x;
-    opacity: 0.7; /* Adjust this to make clouds brighter or softer */
+    opacity: 0.7;
     z-index: 1;
     pointer-events: none;
     animation: cloudDrift 120s linear infinite;
@@ -49,12 +48,12 @@ body {
 .pan-up { transform: rotateX(-90deg) translateZ(200px); opacity: 0; }
 .pan-down { transform: rotateX(90deg) translateZ(200px); opacity: 0; }
 
-/* 5. YOUR STACK LAYOUT */
+/* 5. STACK LAYOUT */
 .layout-stack {
     display: grid;
-    grid-template-columns: 1fr; /* One single stack */
+    grid-template-columns: 1fr;
     gap: 25px;
-    max-width: 600px; /* Narrower width keeps text readable/clean */
+    max-width: 600px;
     margin: 40px auto;
     padding: 20px;
 }
@@ -62,7 +61,6 @@ body {
 header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); }
 h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; margin: 0; animation: neonFlicker 4s infinite; }
 
-/* Faint & Readable Neon Flicker */
 @keyframes neonFlicker {
     0%, 18%, 22%, 25%, 53%, 57%, 100% { 
         opacity: 1; 
@@ -83,7 +81,6 @@ h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; margin: 
     line-height: 1.6;
 }
 
-/* The Shrine "Roof" effect */
 .box::before { 
     content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; 
     background: var(--dim-red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%);
@@ -110,7 +107,6 @@ h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; margin: 
 
 .volume-control { display: flex; align-items: center; gap: 10px; }
 
-/* Custom retro volume slider */
 input[type=range] { -webkit-appearance: none; background: transparent; width: 100px; }
 input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: var(--dim-red); cursor: pointer; }
 input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px; width: 8px; background: var(--red); cursor: pointer; margin-top: -5px; border: 1px solid #000; }
@@ -127,4 +123,3 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 14px
 .track.active .play-btn { color: var(--red); }
 
 .airbit-link { display: inline-block; margin-top: 10px; font-family: 'Press Start 2P'; font-size: 0.6rem; }
- 
