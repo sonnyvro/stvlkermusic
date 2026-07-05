@@ -12,7 +12,7 @@
             --bg-color: #020202;
             --box-bg: #050101;
             --neon-color: #ff0033;
-            --neon-dim: rgba(255, 0, 51, 0.2);
+            --neon-dim: rgba(255, 0, 51, 0.15); 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,25 +32,25 @@
         /* --- CUSTOM CURSOR --- */
         .cursor { width: 10px; height: 10px; background: var(--neon-color); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999999; box-shadow: 0 0 10px var(--neon-color); }
 
-        /* --- FILM GRAIN & STATIC FX --- */
+        /* --- FILM GRAIN & STATIC FX (Softened) --- */
         .film-grain {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 9997;
             background: url('https://www.transparenttextures.com/patterns/noise-lines.png'), url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.15;
-            animation: static-flicker 0.1s infinite;
+            opacity: 0.08; 
+            animation: static-flicker 0.4s steps(4) infinite; 
         }
         .vhs-tracking {
             position: fixed; top: 0; left: 0; width: 100%; height: 10vh;
-            background: rgba(255, 255, 255, 0.03); filter: blur(4px);
+            background: rgba(255, 255, 255, 0.01); filter: blur(4px); 
             z-index: 9998; pointer-events: none;
-            animation: tracking-scroll 5s infinite linear;
+            animation: tracking-scroll 8s infinite linear; 
         }
 
-        /* --- GHOSTLY TEXT FX --- */
+        /* --- GHOSTLY TEXT FX (Softened) --- */
         h1, h2, label, p, button, .ghost-text { 
             text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-            animation: ghostly-flicker 2.5s infinite;
+            animation: ghostly-flicker 4s infinite ease-in-out; 
         }
         
         /* --- FORM CONTAINER --- */
@@ -61,14 +61,14 @@
             width: 100%; 
             max-width: 700px; 
             color: #fff; 
-            animation: pulse-glow 3s infinite ease-in-out; 
+            animation: pulse-glow 4s infinite ease-in-out; 
             position: relative; 
             z-index: 10; 
         }
 
         .header-section { text-align: center; margin-bottom: 30px; border-bottom: 1px dashed var(--neon-dim); padding-bottom: 20px; }
         h1 { font-family: 'Bebas Neue'; font-size: 3.5rem; color: var(--neon-color); letter-spacing: 5px; margin-bottom: 5px; }
-        .subtitle { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #ffccd5; opacity: 0.7; }
+        .subtitle { font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #ffccd5; opacity: 0.5; }
 
         /* --- COMPLEX FORM ELEMENTS --- */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -97,13 +97,13 @@
             font-family: 'Bebas Neue'; font-size: 2rem; letter-spacing: 3px;
             transition: 0.3s; margin-top: 10px;
         }
-        button[type="submit"]:hover { background: var(--neon-color); color: #000; box-shadow: 0 0 25px var(--neon-color); transform: scale(1.02); }
+        button[type="submit"]:hover { background: var(--neon-color); color: #000; box-shadow: 0 0 20px var(--neon-color); transform: scale(1.02); }
 
         /* --- ANIMATIONS --- */
-        @keyframes static-flicker { 0% { background-position: 0 0; opacity: 0.15; } 50% { background-position: -10px 10px; opacity: 0.25; } 100% { background-position: 10px -10px; opacity: 0.15; } }
+        @keyframes static-flicker { 0% { background-position: 0 0; } 50% { background-position: -5px 5px; } 100% { background-position: 5px -5px; } }
         @keyframes tracking-scroll { 0% { top: -20%; } 100% { top: 120%; } }
-        @keyframes ghostly-flicker { 0%, 100% { opacity: 1; filter: blur(0px); } 50% { opacity: 0.85; filter: blur(0.6px); transform: translateY(-0.5px); } }
-        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px var(--neon-dim); } 50% { box-shadow: 0 0 30px var(--neon-color); } }
+        @keyframes ghostly-flicker { 0%, 100% { opacity: 1; filter: blur(0px); } 50% { opacity: 0.9; filter: blur(0.3px); transform: translateY(-0.2px); } }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 5px var(--neon-dim); } 50% { box-shadow: 0 0 12px var(--neon-dim); } }
 
         /* Responsive */
         @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
@@ -117,49 +117,49 @@
 
     <div class="content-box">
         <div class="header-section">
-            <h1>INITIATE_CUSTOM_PROTOCOL</h1>
-            <p class="subtitle">// Establish neural link for audio generation</p>
+            <h1>OPEN A DOSSIER</h1>
+            <p class="subtitle">...tell me exactly what you're looking for...</p>
         </div>
         
         <form action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST">
             
             <div class="form-grid">
                 <div>
-                    <label for="name">Alias / Artist Name</label>
-                    <input type="text" id="name" name="name" placeholder="Who are you?" required>
+                    <label for="name">Alias (Who are you?)</label>
+                    <input type="text" id="name" name="name" placeholder="Leave a name..." required>
                 </div>
                 <div>
-                    <label for="email">Contact Beacon (Email)</label>
-                    <input type="email" id="email" name="email" placeholder="Where do I send it?" required>
+                    <label for="email">Drop Location (Email)</label>
+                    <input type="email" id="email" name="email" placeholder="Where can I find you?" required>
                 </div>
 
                 <div class="full-width">
-                    <label for="vibe">Primary Sonic Aesthetic</label>
+                    <label for="vibe">Sonic Profile</label>
                     <select name="vibe" id="vibe">
-                        <option value="none" disabled selected>-- Select an atmosphere --</option>
+                        <option value="none" disabled selected>-- Select a trace --</option>
                         <option value="dark-trap">Dark / Aggressive Trap</option>
-                        <option value="ambient">Ambient</option>
-                        <option value="alternative">Alternative</option>
-                        <option value="custom">Other (Describe heavily below)</option>
+                        <option value="ambient">Ambient / Eerie Cinematic</option>
+                        <option value="alternative">Alternative / Gritty</option>
+                        <option value="custom">Other (Elaborate below)</option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="bpm">Target BPM (Optional)</label>
+                    <label for="bpm">Pulse (Target BPM - Optional)</label>
                     <input type="text" id="bpm" name="bpm" placeholder="e.g., 140, 90-100">
                 </div>
                 <div>
-                    <label for="references">Reference Links (Optional)</label>
+                    <label for="references">Evidence (Reference Links - Optional)</label>
                     <input type="url" id="references" name="references" placeholder="YouTube, Spotify, Soundcloud...">
                 </div>
 
                 <div class="full-width">
-                    <label for="message">Detailed Vision</label>
-                    <textarea id="message" name="message" placeholder="Describe the mood, instrumentation, structure, or any specific elements you need..." rows="6" required></textarea>
+                    <label for="message">The Specifics</label>
+                    <textarea id="message" name="message" placeholder="Describe the exact mood, the structure, the feeling... leave nothing out. I need to know exactly what you want..." rows="6" required></textarea>
                 </div>
             </div>
             
-            <button type="submit">TRANSMIT REQUEST</button>
+            <button type="submit">LEAVE THE DROP</button>
         </form>
     </div>
 
