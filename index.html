@@ -4,32 +4,81 @@
     <meta charset="UTF-8">
     <title>SONNYVRO // STVLKING</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* CSS EMBEDDED DIRECTLY TO PREVENT LOADING ERRORS */
+        :root {
+            --bg: #000000;
+            --panel: #0a0000;
+            --red: #ff0000;
+            --dim-red: #330000;
+            --text: #e0a0a0;
+        }
+
+        body { 
+            background-color: var(--bg) !important; 
+            color: var(--text) !important; 
+            font-family: 'VT323', monospace; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Grid Layout */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header { grid-column: 1 / -1; text-align: center; margin-bottom: 20px; }
+        h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; }
+
+        .box { 
+            border: 1px solid var(--red); 
+            background: var(--panel); 
+            padding: 20px; 
+            min-height: 220px; 
+            position: relative;
+        }
+
+        /* The Roof Effect */
+        .box::before { 
+            content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; 
+            background: var(--red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%);
+        }
+
+        .box-title { font-family: 'Press Start 2P'; font-size: 0.7rem; color: var(--red); margin-bottom: 15px; }
+
+        .links a { display: block; color: var(--text); text-decoration: none; margin: 8px 0; }
+        .links a:hover { color: var(--red); }
+
+        .home-btn { 
+            grid-column: 1 / -1; background: transparent; border: 1px solid var(--red); 
+            color: var(--red); padding: 15px; cursor: pointer; font-family: 'Press Start 2P';
+        }
+        .home-btn:hover { background: var(--red); color: black; }
+    </style>
 </head>
 <body>
 
-<div id="snow"></div>
+    <main class="layout-grid">
+        <header>
+            <h1>SONNYVRO // STVLKING</h1>
+        </header>
 
-<div id="viewport">
-    <div id="camera">
-        <main class="layout-stack">
-            <header>
-                <h1>SONNYVRO</h1>
-                <p>// STVLKING //</p>
-            </header>
+        <section class="box"><div class="box-title">STVLKER</div><p>Main profile and about section.</p></section>
+        <section class="box"><div class="box-title">SONNYVRO</div><p>Details about the artist.</p></section>
+        <section class="box"><div class="box-title">PICS</div><p>[IMG_GRID]</p></section>
+        <section class="box"><div class="box-title">BLOG</div><p>> Latest update...</p></section>
+        <section class="box"><div class="box-title">BEATS FOR SALE</div><a href="https://air.bi/nXZu4" target="_blank">AIRBIT LINK</a></section>
+        <section class="box"><div class="box-title">LINKS</div><nav class="links"><a href="#">DISCORD</a><a href="#">TWITTER</a></nav></section>
+        
+        <button class="home-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">[ RETURN HOME ]</button>
+    </main>
 
-            <section class="box"><div class="box-title">STVLKER</div><p>Main profile and about section.</p></section>
-            <section class="box"><div class="box-title">SONNYVRO</div><p>Details about the artist.</p></section>
-            <section class="box"><div class="box-title">PICS</div><div class="placeholder-img">[IMG_GRID]</div></section>
-            <section class="box"><div class="box-title">BLOG</div><p>> Latest update...</p></section>
-            <section class="box"><div class="box-title">BEATS FOR SALE</div><a href="https://air.bi/nXZu4" target="_blank" class="nav-link">AIRBIT LINK</a></section>
-            <section class="box"><div class="box-title">LINKS</div><nav class="links"><a href="#">DISCORD</a><a href="#">TWITTER</a></nav></section>
-            
-            <button class="home-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">[ RETURN HOME ]</button>
-        </main>
-    </div>
-</div>
-
-<script src="js/app.js"></script>
 </body>
 </html>
+ 
