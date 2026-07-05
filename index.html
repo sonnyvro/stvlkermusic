@@ -13,16 +13,14 @@
             --bg-color: #020202;
             --box-bg: #050101;
             --neon-color: #ff0033;
-            --neon-core: #ffffff;
             --neon-dim: rgba(255, 0, 51, 0.2);
-            --flip-speed: 0.5s;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Montserrat', sans-serif; background-color: var(--bg-color); color: #ccc; overflow-x: hidden; cursor: none; } 
 
         /* --- GHOSTLY TEXT FX --- */
-        h1, h2, h3, p, span, button, .nav-btn, .shop-card, .upload-label { 
+        h1, h2, h3, p, span, button, .nav-btn, .shop-card { 
             text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
             animation: ghostly-flicker 2.5s infinite;
         }
@@ -35,16 +33,14 @@
         .cursor { width: 10px; height: 10px; background: var(--neon-color); border-radius: 50%; position: fixed; pointer-events: none; z-index: 999999; box-shadow: 0 0 10px var(--neon-color); }
 
         /* --- BACKGROUND FX --- */
-        #bg-video, #bg-gif { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; filter: blur(3px) grayscale(90%) brightness(0.6); opacity: 0.2; }
-        #clouds-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 50vh; background-image: url('clouds.png'); background-size: cover; background-position: top center; opacity: 0.6; pointer-events: none; z-index: 1; -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 100%); mask-image: linear-gradient(to bottom, black 10%, transparent 100%); }
-        #cracks-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9996; }
+        #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; filter: blur(3px) grayscale(90%) brightness(0.6); opacity: 0.2; }
+        #clouds-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 50vh; background-image: url('clouds.png'); background-size: cover; background-position: top center; opacity: 0.25; pointer-events: none; z-index: 1; -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 100%); mask-image: linear-gradient(to bottom, black 10%, transparent 100%); }
         .rain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/rain.png'); opacity: 0.05; pointer-events: none; z-index: 9997; animation: rain-move 10s linear infinite; }
         body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/noise-lines.png'); opacity: 0.04; pointer-events: none; z-index: 9998; }
-        #logo-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('logo.png'); background-repeat: no-repeat; background-position: center; background-size: 40%; opacity: 0.03; z-index: 1; pointer-events: none; filter: blur(3px); }
         .lightning { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--neon-color); pointer-events: none; z-index: 2; animation: lightning 15s linear infinite; mix-blend-mode: overlay; }
 
         /* --- UI COMPONENTS --- */
-        .content-box { background: var(--box-bg); border: 1px solid var(--neon-color); padding: 30px; margin: 20px auto; max-width: 800px; color: #fff; animation: pulse-glow 3s infinite ease-in-out; position: relative; z-index: 5; transition: 0.3s; }
+        .content-box { background: var(--box-bg); border: 1px solid var(--neon-color); padding: 30px; margin: 20px auto; max-width: 800px; color: #fff; animation: pulse-glow 3s infinite ease-in-out; position: relative; z-index: 5; }
         .nav-btn { background: transparent; border: 1px solid var(--neon-dim); color: #fff; padding: 10px 20px; font-family: 'Bebas Neue'; cursor: pointer; margin: 10px; transition: 0.3s; font-size: 1.2rem; }
         .nav-btn:hover { border-color: var(--neon-color); transform: scale(1.1); box-shadow: 0 0 20px var(--neon-color); }
         .shop-card { background: var(--box-bg); border: 1px solid var(--neon-color); padding: 15px 20px; cursor: pointer; color: #fff; text-decoration: none; display: flex; flex-direction: column; align-items: center; width: 220px; transition: 0.3s; }
@@ -55,7 +51,10 @@
         #transition-overlay.active { opacity: 1; }
         .page-section { display: none; }
         .active { display: block; }
+        
         @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px var(--neon-dim); } 50% { box-shadow: 0 0 25px var(--neon-color); } }
+        @keyframes rain-move { from { background-position: 0 0; } to { background-position: 100px 1000px; } }
+        @keyframes lightning { 0%, 95%, 98% { opacity: 0; } 96% { opacity: 0.08; } 97% { opacity: 0.02; } }
     </style>
 </head>
 <body>
@@ -64,7 +63,6 @@
     
     <video id="bg-video" loop muted playsinline><source src="background.mp4" type="video/mp4"></video>
     <div id="clouds-overlay"></div>
-    <div id="cracks-container"></div>
     <div class="rain"></div>
     <div class="lightning"></div>
     <audio id="bg-audio" loop></audio>
@@ -107,9 +105,19 @@
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
 
-        const pageTracks = { 'home-section': { file: 'killing.mp3' }, 'about-section': { file: 'letmefall.mp3' } };
+        const pageTracks = { 
+            'home-section': { file: 'killing.mp3' }, 
+            'about-section': { file: 'letmefall.mp3' } 
+        };
 
-        function startAudio() { const audio = document.getElementById('bg-audio'); audio.volume = 0.3; audio.src = pageTracks['home-section'].file; audio.play(); document.getElementById('start-screen').style.display = 'none'; document.getElementById('bg-video').play(); }
+        function startAudio() { 
+            const audio = document.getElementById('bg-audio');
+            audio.volume = 0.3; 
+            audio.src = pageTracks['home-section'].file;
+            audio.play(); 
+            document.getElementById('start-screen').style.display = 'none'; 
+            document.getElementById('bg-video').play();
+        }
 
         function showPage(pageId) {
             const target = document.getElementById(pageId);
@@ -118,7 +126,11 @@
             setTimeout(() => {
                 document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
                 target.classList.add('active');
-                if (pageTracks[pageId]) { const audio = document.getElementById('bg-audio'); audio.src = pageTracks[pageId].file; audio.play(); }
+                if (pageTracks[pageId]) { 
+                    const audio = document.getElementById('bg-audio'); 
+                    audio.src = pageTracks[pageId].file; 
+                    audio.play(); 
+                }
                 setTimeout(() => transition.classList.remove('active'), 200);
             }, 600);
         }
