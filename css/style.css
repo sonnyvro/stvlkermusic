@@ -199,15 +199,19 @@ font-family:'Press Start 2P', cursive;
 
 font-size:clamp(24px,3vw,42px);
 
-letter-spacing:3px;
+letter-spacing:4px;
 
-color:#ffe3e3;
+color:white;
+
+animation:titleGlow 2s ease-in-out infinite;
 
 text-shadow:
 
-0 0 8px #ff4444,
+0 0 5px #ff4040,
 
-0 0 25px #ff0000;
+0 0 20px #ff0000,
+
+0 0 45px #ff0000;
 
 }
 
@@ -462,6 +466,33 @@ font-size:24px;
 .body{
 
 padding:20px;
+
+}
+
+}
+@keyframes titleGlow{
+
+0%,100%{
+
+text-shadow:
+
+0 0 5px #ff4444,
+
+0 0 20px #ff0000,
+
+0 0 40px #ff0000;
+
+}
+
+50%{
+
+text-shadow:
+
+0 0 10px #ff8888,
+
+0 0 35px #ff2222,
+
+0 0 70px #ff0000;
 
 }
 
