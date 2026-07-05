@@ -5,113 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SONNYVRO // STVLKING</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg: #050101; 
-            --panel-bg: rgba(15, 5, 5, 0.85); 
-            --border: #ff3333; 
-            --border-dim: #551111; 
-            --text-main: #ffcccc; 
-            --text-highlight: #ff3333; 
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body, html {
-            width: 100%; height: 100%; overflow: hidden;
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'VT323', monospace;
-            font-size: 1.2rem;
-            /* Starry Background */
-            background-image: radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)), radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0));
-            background-size: 200px 200px;
-        }
-
-        /* 3D CAMERA SYSTEM */
-        #viewport {
-            perspective: 1000px;
-            width: 100vw; height: 100vh;
-            overflow: hidden; position: relative; z-index: 10;
-        }
-
-        #camera {
-            width: 100%; height: 100%;
-            transform-style: preserve-3d;
-            transform-origin: center center -400px; 
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease-in;
-        }
-
-        /* DIRECTIONAL CLASSES */
-        .pan-right  { transform: translateZ(200px) rotateY(-90deg); opacity: 0; }
-        .pan-left   { transform: translateZ(200px) rotateY(90deg); opacity: 0; }
-        .pan-up     { transform: translateZ(200px) rotateX(-90deg); opacity: 0; }
-        .pan-down   { transform: translateZ(200px) rotateX(90deg); opacity: 0; }
-        .pan-in     { transform: translateZ(800px); opacity: 0; }
-
-        /* Container Layout */
-        .container {
-            max-width: 950px; margin: 40px auto; padding: 0 15px;
-            display: grid; grid-template-columns: 2fr 1fr; gap: 20px;
-        }
-
-        header { grid-column: 1 / -1; text-align: center; margin-bottom: 20px; }
-        header h1 { font-family: 'Press Start 2P', cursive; color: var(--text-highlight); font-size: 2.5rem; }
-        
-        .panel { background: var(--panel-bg); border: 1px solid var(--border-dim); border-top: 1px solid var(--border); border-left: 1px solid var(--border); padding: 20px; margin-bottom: 20px; }
-        .panel-header { font-family: 'Press Start 2P', cursive; color: var(--text-highlight); font-size: 0.8rem; margin-bottom: 15px; border-bottom: 1px dashed var(--border-dim); padding-bottom: 10px; }
-        
-        .btn { background: transparent; border: 1px solid var(--border-dim); color: var(--text-main); font-family: 'VT323', monospace; font-size: 1.2rem; padding: 8px; cursor: pointer; width: 100%; margin-top: 5px; }
-        .btn:hover { border-color: var(--border); color: var(--text-highlight); background: rgba(255, 51, 51, 0.1); }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <div id="viewport">
         <div id="camera">
-            <div class="container">
+            
+            <div id="world">
+                <div id="stars"></div>
+                <div id="moon"></div>
+                <div id="clouds"></div>
+                <div id="bgCity"></div>
+                <div id="fog"></div>
+                <div id="rain"></div>
+            </div>
+
+            <main id="scene">
                 <header>
                     <h1>SONNYVRO</h1>
-                    <h2>// STVLKING //</h2>
+                    <p>STVLKING</p>
                 </header>
 
-                <div class="left-col">
-                    <div class="panel">
-                        <div class="panel-header">🌙 WELCOME</div>
-                        <p>Welcome to the digital shrine. Sonny, 21. Music production daily.</p>
+                <section id="shrine">
+                    <div id="roof"></div>
+                    <div class="lantern left"><div class="rope"></div><div class="light"></div></div>
+                    <div class="lantern right"><div class="rope"></div><div class="light"></div></div>
+                    <div id="roofBeam"></div>
+                    <div id="crossBeam"></div>
+                    
+                    <div id="building">
+                        <div class="pillar left"></div>
+                        <div id="content">
+                            <div id="innerShrine">
+                                <div id="doors">
+                                    <div class="door leftDoor">
+                                        <div class="doorFrame">
+                                            <button onclick="pan('pan-left', 'index.html')">STOCK</button>
+                                            <button onclick="pan('pan-up', 'about.html')">CUSTOM</button>
+                                        </div>
+                                    </div>
+                                    <div class="door rightDoor">
+                                        <div class="doorFrame">
+                                            <button onclick="pan('pan-right', 'misc.html')">MISC</button>
+                                            <div class="screen">NO TRACK LOADED</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel">
+                                <h2>ABOUT</h2>
+                                <p>Welcome to the Shrine.</p>
+                            </div>
+                        </div>
+                        <div class="pillar right"></div>
                     </div>
-                </div>
-
-                <div class="right-col">
-                    <div class="panel">
-                        <div class="panel-header">⭐ DIRECTORY</div>
-                        <a href="index.html" class="nav-link btn" data-direction="left">Home</a>
-                        <a href="#" class="nav-link btn" data-direction="up">About Me</a>
-                        <a href="https://air.bi/nXZu4" class="btn" target="_blank">Stock Beats</a>
-                        <a href="form.html" class="nav-link btn" data-direction="in">Custom Beats</a>
-                        <a href="misc.html" class="nav-link btn" data-direction="down">Misc Archive</a>
-                    </div>
-                </div>
+                </section>
+            </main>
             </div>
-        </div>
     </div>
 
     <script>
-        const camera = document.getElementById('camera');
-        const navLinks = document.querySelectorAll('.nav-link');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.target === "_blank") return;
-                e.preventDefault(); 
-                const targetUrl = this.getAttribute('href');
-                const dir = this.getAttribute('data-direction') || 'right';
-                
-                camera.classList.add('pan-' + dir);
-                setTimeout(() => { window.location.href = targetUrl; }, 1000);
-            });
-        });
+        function pan(directionClass, url) {
+            const camera = document.getElementById('camera');
+            // Apply the camera turn class
+            camera.classList.add(directionClass);
+            
+            // Wait for 1 second animation, then navigate
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1000);
+        }
     </script>
 </body>
 </html>
