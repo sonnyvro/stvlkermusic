@@ -1,312 +1,312 @@
-/* ==========================
+/* ===================================
    SONNYVRO // STVLKING
-   BUILD 0.1
-========================== */
+   VERSION 1.0
+=================================== */
 
 :root{
-    --bg:#050505;
-    --panel:#120606;
-    --panel2:#1d0909;
-    --border:#5d1515;
-    --highlight:#ff3b3b;
-    --text:#ffd9d9;
+
+--bg:#050505;
+--panel:#111;
+--red:#ff3a3a;
+--darkred:#741818;
+--text:#ffe7e7;
+
 }
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
 }
 
 html,body{
-    width:100%;
-    height:100%;
-}
 
-body{
-    background:#050505;
-    overflow:hidden;
-    font-family:'VT323', monospace;
-    color:var(--text);
+width:100%;
+height:100%;
+overflow:hidden;
+
+font-family:VT323, monospace;
+
+background:black;
+
+color:var(--text);
+
 }
 
 /* ==========================
-      BACKGROUND
+      WORLD
 ========================== */
 
-#background{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    z-index:-10;
-    background:
-    radial-gradient(circle at top,#260808 0%,#090909 45%,#000 100%);
-}
+#world{
 
-/* Stars */
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:0;
 
-.stars{
-    position:absolute;
-    inset:0;
-    background-image:
-    radial-gradient(#ffffff55 1px, transparent 1px);
-    background-size:120px 120px;
-    opacity:.25;
-}
-
-/* Rain */
-
-.rain{
-    position:absolute;
-    inset:-100%;
-    background-image:
-    repeating-linear-gradient(
-        90deg,
-        transparent 0,
-        transparent 96px,
-        rgba(255,255,255,.06) 97px,
-        rgba(255,255,255,.08) 98px
-    );
-
-    transform:rotate(12deg);
-
-  animation:rainMove .35s linear infinite;
-}
-
-@keyframes rainMove{
-
-0%{
-
-transform:
-translate(-40px,-150px)
-rotate(14deg);
+background:
+linear-gradient(
+to bottom,
+#080808,
+#120404,
+#020202
+);
 
 }
 
-100%{
+/* ==========================
+      STARS
+========================== */
 
-transform:
-translate(40px,150px)
-rotate(14deg);
+#stars{
 
-}
+position:absolute;
+inset:0;
 
-}
-/* Fog */
+background-image:
+radial-gradient(white 1px, transparent 1px);
 
-.fog{
+background-size:90px 90px;
 
-    position:absolute;
+opacity:.18;
 
-    inset:0;
-
-    background:
-    radial-gradient(circle,#66151522,transparent 70%);
-
-    animation:fog 10s ease-in-out infinite;
+animation:twinkle 6s infinite;
 
 }
 
-@keyframes fog{
+/* ==========================
+      MOON
+========================== */
 
-0%,100%{
-
-opacity:.2;
-
-transform:scale(1);
-
-}
-
-50%{
-
-opacity:.45;
-
-transform:scale(1.08);
-
-}
-
-}
-
-/* Vignette */
-
-.vignette{
+#moon{
 
 position:absolute;
 
-inset:0;
+right:10%;
+
+top:80px;
+
+width:180px;
+height:180px;
+
+border-radius:50%;
+
+background:#ffd9d9;
+
+opacity:.18;
 
 box-shadow:
-inset 0 0 200px black,
-inset 0 0 350px black;
+0 0 40px rgba(255,80,80,.35),
+0 0 120px rgba(255,50,50,.2);
+
+animation:moonFloat 10s ease-in-out infinite;
 
 }
 
-/* CRT */
+/* ==========================
+      CLOUDS
+========================== */
 
-.crt{
+#clouds{
 
 position:absolute;
 
 inset:0;
+
+opacity:.25;
+
+background:
+
+radial-gradient(circle at 20% 30%,#260808 0%,transparent 22%),
+radial-gradient(circle at 50% 40%,#200505 0%,transparent 26%),
+radial-gradient(circle at 80% 20%,#220707 0%,transparent 22%);
+
+animation:cloudMove 80s linear infinite;
+
+}
+
+/* ==========================
+      CITY
+========================== */
+
+#city{
+
+position:absolute;
+
+bottom:0;
+
+width:100%;
+height:180px;
 
 background:
 repeating-linear-gradient(
-
-0deg,
-
-transparent 0px,
-
-transparent 3px,
-
-rgba(0,0,0,.18) 4px
-
+90deg,
+#060606 0 20px,
+#101010 20px 38px,
+#090909 38px 58px,
+#161616 58px 90px
 );
 
-opacity:.35;
-
-pointer-events:none;
-
-animation:flicker .18s infinite;
-
-}
-
-@keyframes flicker{
-
-0%{opacity:.28;}
-
-50%{opacity:.34;}
-
-100%{opacity:.29;}
+clip-path:polygon(
+0 100%,
+0 55%,
+4% 48%,
+8% 66%,
+13% 40%,
+20% 65%,
+28% 38%,
+36% 70%,
+45% 45%,
+54% 68%,
+63% 40%,
+70% 60%,
+80% 45%,
+88% 67%,
+94% 48%,
+100% 60%,
+100% 100%
+);
 
 }
 
 /* ==========================
-        HEADER
+      FOG
 ========================== */
 
-header{
+#fog{
 
 position:absolute;
 
-top:50px;
+bottom:0;
 
 width:100%;
+height:200px;
 
-text-align:center;
+background:
+linear-gradient(
+to top,
+rgba(100,20,20,.22),
+transparent
+);
 
-}
-
-header h1{
-
-font-family:'Press Start 2P', cursive;
-
-font-size:clamp(24px,3vw,42px);
-
-letter-spacing:4px;
-
-color:white;
-
-animation:titleGlow 2s ease-in-out infinite;
-
-text-shadow:
-
-0 0 5px #ff4040,
-
-0 0 20px #ff0000,
-
-0 0 45px #ff0000;
-
-}
-
-header p{
-
-margin-top:18px;
-
-font-size:32px;
-
-letter-spacing:8px;
-
-color:#ff6b6b;
+animation:fogMove 10s ease-in-out infinite;
 
 }
 
 /* ==========================
-        SHRINE
+      RAIN
 ========================== */
 
-main{
+#rain{
+
+position:absolute;
+inset:0;
+
+background-image:
+repeating-linear-gradient(
+-15deg,
+transparent 0 14px,
+rgba(255,255,255,.08) 15px 16px
+);
+
+animation:rain .35s linear infinite;
+
+}
+
+/* ==========================
+      MAIN SCENE
+========================== */
+
+#scene{
+
+position:relative;
+
+z-index:10;
+
+height:100%;
 
 display:flex;
+
+flex-direction:column;
 
 justify-content:center;
 
 align-items:center;
 
-height:100vh;
+}
 
-padding-top:80px;
+/* ==========================
+      TITLE
+========================== */
+
+header{
+
+text-align:center;
+
+margin-bottom:30px;
 
 }
+
+header h1{
+
+font-size:4rem;
+
+letter-spacing:8px;
+
+color:white;
+
+text-shadow:
+0 0 15px red,
+0 0 40px red;
+
+}
+
+header p{
+
+font-size:2rem;
+
+color:#ff9999;
+
+}
+
+/* ==========================
+      SHRINE
+========================== */
 
 #shrine{
 
-width:min(90vw,650px);
+width:650px;
 
-animation:float 5s ease-in-out infinite;
+max-width:95vw;
 
-}
-
-@keyframes float{
-
-0%,100%{
-
-transform:translateY(0);
+animation:float 4s ease-in-out infinite;
 
 }
 
-50%{
+#roof{
 
-transform:translateY(-10px);
+height:40px;
 
-}
+background:#190909;
 
-}
+border:4px solid #611;
 
-/* Roof */
-
-.roof{
-
-height:45px;
-
-background:#170707;
-
-clip-path:polygon(10% 0,90% 0,100% 100%,0% 100%);
-
-border:4px solid var(--border);
+clip-path:polygon(
+10% 0,
+90% 0,
+100% 100%,
+0 100%
+);
 
 }
 
-/* Roof Base */
+#building{
 
-.roof-base{
+background:#0d0d0d;
 
-height:18px;
-
-background:#220909;
-
-border-left:4px solid var(--border);
-
-border-right:4px solid var(--border);
-
-}
-
-/* Body */
-
-.body{
-
-background:var(--panel);
-
-border:4px solid var(--border);
+border:4px solid #611;
 
 padding:30px;
 
@@ -314,16 +314,12 @@ display:flex;
 
 flex-direction:column;
 
-gap:25px;
-
-box-shadow:
-
-0 0 25px rgba(255,0,0,.18);
+gap:20px;
 
 }
 
 /* ==========================
-        BUTTONS
+      BUTTONS
 ========================== */
 
 .menu{
@@ -338,263 +334,65 @@ gap:15px;
 
 button{
 
-font-family:'Press Start 2P';
+background:#111;
 
-font-size:11px;
+border:2px solid #822;
 
-padding:18px;
+color:white;
+
+padding:16px;
+
+font-family:inherit;
+
+font-size:1.3rem;
 
 cursor:pointer;
 
-background:#220909;
-
-color:var(--text);
-
-border:3px solid var(--border);
-
-transition:.15s;
+transition:.25s;
 
 }
 
 button:hover{
 
-background:#ff3434;
+background:#ff3030;
 
 color:black;
 
-transform:translateY(-2px);
-
-box-shadow:
-
-0 0 15px #ff3434;
-
-}
-
-button:active{
-
-transform:translateY(2px);
+box-shadow:0 0 25px red;
 
 }
 
 /* ==========================
-        PANELS
+      PANELS
 ========================== */
 
-.player,
+.panel{
 
-.about{
+background:#181818;
 
-background:var(--panel2);
-
-border:3px solid var(--border);
-
-padding:18px;
-
-}
-
-.player h2,
-
-.about h2{
-
-font-family:'Press Start 2P';
-
-font-size:13px;
-
-margin-bottom:18px;
-
-color:#ff7070;
-
-}
-
-.screen{
-
-height:90px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-background:black;
-
-border:2px solid var(--border);
-
-font-size:28px;
-
-margin-bottom:20px;
-
-}
-
-.controls{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:10px;
-
-}
-
-/* ==========================
-       MOBILE
-========================== */
-
-@media(max-width:700px){
-
-.menu{
-
-grid-template-columns:1fr;
-
-}
-
-.controls{
-
-grid-template-columns:1fr;
-
-}
-
-header{
-
-top:25px;
-
-}
-
-header p{
-
-font-size:24px;
-
-}
-
-.body{
+border:2px solid #500;
 
 padding:20px;
 
 }
 
-}
-@keyframes titleGlow{
-
-0%,100%{
-
-text-shadow:
-
-0 0 5px #ff4444,
-
-0 0 20px #ff0000,
-
-0 0 40px #ff0000;
-
-}
-
-50%{
-
-text-shadow:
-
-0 0 10px #ff8888,
-
-0 0 35px #ff2222,
-
-0 0 70px #ff0000;
-
-}
-
-}
 /* ==========================
-        MOON
+      ANIMATIONS
 ========================== */
 
-.moon{
+@keyframes rain{
 
-position:absolute;
+from{
 
-top:60px;
-
-right:120px;
-
-width:180px;
-
-height:180px;
-
-border-radius:50%;
-
-background:#ffdddd;
-
-box-shadow:
-0 0 40px rgba(255,80,80,.5),
-0 0 100px rgba(255,0,0,.2);
-
-opacity:.25;
-
-animation:moonPulse 8s ease-in-out infinite;
+transform:translateY(-120px);
 
 }
 
-@keyframes moonPulse{
+to{
 
-0%,100%{
-
-transform:scale(1);
-
-opacity:.22;
+transform:translateY(120px);
 
 }
-
-50%{
-
-transform:scale(1.05);
-
-opacity:.35;
-
-}
-
-}
-
-/* ==========================
-        CLOUDS
-========================== */
-
-.cloud{
-
-position:absolute;
-
-height:70px;
-
-background:rgba(40,0,0,.35);
-
-filter:blur(12px);
-
-border-radius:50px;
-
-}
-
-.cloud1{
-
-width:300px;
-
-top:90px;
-
-animation:cloudMove 60s linear infinite;
-
-}
-
-.cloud2{
-
-width:450px;
-
-top:170px;
-
-animation:cloudMove 90s linear infinite reverse;
-
-}
-
-.cloud3{
-
-width:240px;
-
-top:250px;
-
-animation:cloudMove 75s linear infinite;
 
 }
 
@@ -602,113 +400,15 @@ animation:cloudMove 75s linear infinite;
 
 from{
 
-transform:translateX(-450px);
+transform:translateX(-200px);
 
 }
 
 to{
 
-transform:translateX(calc(100vw + 500px));
+transform:translateX(200px);
 
 }
-
-}
-
-/* ==========================
-        CITY
-========================== */
-
-.city{
-
-position:absolute;
-
-bottom:0;
-
-left:0;
-
-width:100%;
-
-height:180px;
-
-background:
-
-repeating-linear-gradient(
-
-90deg,
-
-#070707 0 25px,
-
-#111 25px 45px,
-
-#090909 45px 65px,
-
-#161616 65px 90px
-
-);
-
-clip-path:polygon(
-
-0 100%,
-
-0 55%,
-
-4% 48%,
-
-8% 65%,
-
-12% 42%,
-
-18% 68%,
-
-25% 38%,
-
-33% 70%,
-
-40% 45%,
-
-47% 63%,
-
-56% 35%,
-
-64% 60%,
-
-73% 48%,
-
-80% 66%,
-
-88% 42%,
-
-94% 58%,
-
-100% 46%,
-
-100% 100%
-
-);
-
-opacity:.9;
-
-}
-
-/* ==========================
-      GROUND FOG
-========================== */
-
-.fog{
-
-background:
-
-linear-gradient(
-
-to top,
-
-rgba(70,0,0,.28),
-
-transparent 70%
-
-);
-
-animation:fogMove 10s ease-in-out infinite;
 
 }
 
@@ -722,19 +422,41 @@ transform:translateX(0);
 
 50%{
 
-transform:translateX(25px);
+transform:translateX(40px);
 
 }
 
 }
 
-/* ==========================
-      STAR TWINKLE
-========================== */
+@keyframes moonFloat{
 
-.stars{
+0%,100%{
 
-animation:twinkle 6s linear infinite;
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+}
+
+@keyframes float{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-8px);
+
+}
 
 }
 
@@ -748,7 +470,7 @@ opacity:.15;
 
 50%{
 
-opacity:.35;
+opacity:.30;
 
 }
 
