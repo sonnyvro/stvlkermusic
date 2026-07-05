@@ -120,17 +120,23 @@ animation:moonFloat 8s ease-in-out infinite;
 
 position:absolute;
 
-inset:0;
+top:0;
+left:0;
 
-opacity:.25;
+width:200%;
+height:320px;
 
-background:
+background:url("../assets/clouds.png") repeat-x;
 
-radial-gradient(circle at 20% 30%,#260808 0%,transparent 22%),
-radial-gradient(circle at 50% 40%,#200505 0%,transparent 26%),
-radial-gradient(circle at 80% 20%,#220707 0%,transparent 22%);
+background-size:auto 100%;
 
-animation:cloudMove 80s linear infinite;
+opacity:.65;
+
+pointer-events:none;
+
+z-index:2;
+
+animation:cloudScroll 90s linear infinite;
 
 }
 
@@ -1079,6 +1085,19 @@ top .05s linear;
 
 }
 @keyframes cityScroll{
+
+from{
+
+transform:translateX(0);
+
+}
+
+to{
+
+transform:translateX(-50%);
+
+}
+@keyframes cloudScroll{
 
 from{
 
