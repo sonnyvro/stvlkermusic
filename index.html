@@ -102,39 +102,78 @@
     </div>
 
     <script>
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
 
-        const pageTracks = { 
-            'home-section': { file: 'killing.mp3' }, 
-            'about-section': { file: 'letmefall.mp3' } 
-        };
+    // 1. ADD ALL YOUR TRACKS HERE
+    const playlist = [
+        { title: "KILLING", file: "music/killing.mp3" },
+        { title: "CCC", file: "ccc.mp3" },
+        { title: "4M", file: "music/4m.mp3" },
+        { title: "ALIVE", file: "music/alive.mp3" },
+        { title: "ECHO", file: "music/echo.mp3" },
+        { title: "WIDOW", file: "music/widow.mp3" },
+        { title: "ERROR", file: "music/error.mp3" }
+        
+    ];
 
-        function startAudio() { 
-            const audio = document.getElementById('bg-audio');
-            audio.volume = 0.3; 
-            audio.src = pageTracks['home-section'].file;
-            audio.play(); 
-            document.getElementById('start-screen').style.display = 'none'; 
-            document.getElementById('bg-video').play();
+    let currentTrackIndex = 0;
+    const audio = document.getElementById('bg-audio');
+    const titleDisplay = document.getElementById('track-title');
+    const playBtn = document.getElementById('play-btn');
+
+    // 2. PLAYER FUNCTIONS
+    function togglePlay() {
+        if (audio.paused) {
+            audio.play();
+            playBtn.innerText = "PAUSE";
+        } else {
+            audio.pause();
+            playBtn.innerText = "PLAY";
         }
+    }
 
-        function showPage(pageId) {
-            const target = document.getElementById(pageId);
-            const transition = document.getElementById('transition-overlay');
-            transition.classList.add('active');
-            setTimeout(() => {
-                document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-                target.classList.add('active');
-                if (pageTracks[pageId]) { 
-                    const audio = document.getElementById('bg-audio'); 
-                    audio.src = pageTracks[pageId].file; 
-                    audio.play(); 
-                }
-                setTimeout(() => transition.classList.remove('active'), 200);
-            }, 600);
-        }
-    </script>
+    function loadTrack(index) {
+        audio.src = playlist[index].file;
+        titleDisplay.innerText = playlist[index].title;
+        audio.play();
+        playBtn.innerText = "PAUSE";
+    }
+
+    function nextTrack() {
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+        loadTrack(currentTrackIndex);
+    }
+
+    function prevTrack() {
+        currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+        loadTrack(currentTrackIndex);
+    }
+
+    function shuffleTracks() {
+        currentTrackIndex = Math.floor(Math.random() * playlist.length);
+        loadTrack(currentTrackIndex);
+    }
+
+    // 3. INITIALIZATION
+    function startAudio() { 
+        document.getElementById('start-screen').style.display = 'none'; 
+        document.getElementById('bg-video').play();
+        audio.volume = 0.3;
+        loadTrack(0); 
+    }
+
+    function showPage(pageId) {
+        const target = document.getElementById(pageId);
+        const transition = document.getElementById('transition-overlay');
+        transition.classList.add('active');
+        setTimeout(() => {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            target.classList.add('active');
+            setTimeout(() => transition.classList.remove('active'), 200);
+        }, 600);
+    }
+</script>
 </body>
 </html>
 
