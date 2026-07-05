@@ -583,6 +583,97 @@ flex-direction:column;
 gap:20px;
 
 }
+
+/* ==========================
+        SHRINE DOORS
+========================== */
+
+#doors{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:24px;
+
+}
+
+.door{
+
+background:
+linear-gradient(
+to bottom,
+#1b0b0b,
+#0b0505
+);
+
+border:4px solid #662222;
+
+padding:18px;
+
+position:relative;
+
+box-shadow:
+inset 0 0 25px rgba(255,60,60,.06),
+0 0 18px rgba(255,0,0,.12);
+
+}
+
+.door::before{
+
+content:"";
+
+position:absolute;
+
+left:50%;
+top:0;
+
+width:3px;
+height:100%;
+
+background:#331111;
+
+transform:translateX(-50%);
+
+opacity:.5;
+
+}
+
+.doorFrame{
+
+display:flex;
+
+flex-direction:column;
+
+gap:16px;
+
+}
+
+.screen{
+
+background:black;
+
+border:2px solid #661111;
+
+padding:18px;
+
+text-align:center;
+
+color:#ff8a8a;
+
+min-height:90px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+box-shadow:
+inset 0 0 12px rgba(255,0,0,.2);
+
+}
+
 /* ==========================
       BUTTONS
 ========================== */
