@@ -1,0 +1,16 @@
+sonnyvro-site/
+│
+├── index.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   └── app.js
+│
+├── assets/
+│   ├── images/
+│   ├── music/
+│   └── sounds/
+│
+└── README.md (optional)
