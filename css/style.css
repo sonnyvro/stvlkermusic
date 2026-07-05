@@ -1,4 +1,55 @@
-/* Stack Layout */
+/* 1. STRICT COLOR PALETTE */
+:root {
+    --bg: #000000;
+    --panel: rgba(10, 0, 0, 0.85);
+    --red: #ff0000;
+    --dim-red: #330000;
+    --text: #e0a0a0;
+}
+
+/* 2. THE DIMMED WALLPAPER */
+body { 
+    /* The linear-gradient acts as a shadow filter over your image */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+        url('wallpaper.jpg'); /* REPLACE WITH YOUR IMAGE */
+    
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: var(--bg) !important; 
+    
+    color: var(--text) !important; 
+    font-family: 'VT323', monospace; 
+    margin: 0; 
+    overflow-x: hidden; 
+    perspective: 1000px;
+}
+
+/* 3. THE UNAFFECTED CLOUD LAYER */
+#clouds-layer {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('clouds.png'); /* REPLACE WITH YOUR CLOUD IMAGE */
+    background-repeat: repeat-x;
+    opacity: 0.7; /* Adjust this to make clouds brighter or softer */
+    z-index: 1;
+    pointer-events: none;
+    animation: cloudDrift 120s linear infinite;
+}
+@keyframes cloudDrift { from { background-position: 0 0; } to { background-position: 1000px 0; } }
+
+/* 4. RAIN & CAMERA */
+#rain-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+#viewport { position: relative; z-index: 3; width: 100vw; min-height: 100vh; }
+#camera { width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+
+.pan-left { transform: rotateY(90deg) translateZ(200px); opacity: 0; }
+.pan-right { transform: rotateY(-90deg) translateZ(200px); opacity: 0; }
+.pan-up { transform: rotateX(-90deg) translateZ(200px); opacity: 0; }
+.pan-down { transform: rotateX(90deg) translateZ(200px); opacity: 0; }
+
+/* 5. YOUR STACK LAYOUT */
 .layout-stack {
     display: grid;
     grid-template-columns: 1fr; /* One single stack */
@@ -6,6 +57,14 @@
     max-width: 600px; /* Narrower width keeps text readable/clean */
     margin: 40px auto;
     padding: 20px;
+}
+
+header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); }
+h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; margin: 0; animation: neonFlicker 4s infinite; }
+
+@keyframes neonFlicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; text-shadow: 0 0 5px #fff, 0 0 15px var(--red), 0 0 30px var(--red); }
+    20%, 24%, 55% { opacity: 0.4; text-shadow: none; }
 }
 
 .box { 
@@ -22,9 +81,16 @@
     background: var(--dim-red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%);
 }
 
+.box-title { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--red); margin-bottom: 20px; border-bottom: 1px solid var(--dim-red); padding-bottom: 10px; }
+
+.links a { display: block; color: var(--text); text-decoration: none; margin: 10px 0; }
+.links a:hover { color: var(--red); padding-left: 5px; }
+
 .home-btn { 
     background: transparent; border: 1px solid var(--red); color: var(--red); 
     padding: 20px; cursor: pointer; font-family: 'Press Start 2P'; font-size: 0.8rem;
     transition: 0.3s;
+    width: 100%;
+    margin-bottom: 100px;
 }
 .home-btn:hover { background: var(--red); color: black; }
