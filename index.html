@@ -202,17 +202,16 @@
         animate();
     }
 
-    // 2. AUDIO ENGINE & BUTTON DELEGATION
+// 2. AUDIO ENGINE & BUTTON DELEGATION
     const audioEngine = new Audio();
     const nowPlayingText = document.getElementById('now-playing');
-    const volumeSlider = document.getElementById('vol-slider'); // Make sure we grab the slider
+    const volumeSlider = document.getElementById('vol-slider');
 
-    // LINK SLIDER TO VOLUME
-    volumeSlider.addEventListener('input', function() {
-        audioEngine.volume = this.value;
-    });
+    // Set initial volume
+    audioEngine.volume = volumeSlider.value;
 
-    // ... rest of your existing script ...
+    // Listen for volume changes AND clicks in one place
+    document.body.addEventListener('click', function(e) {
         
         // Handle Track Clicks
         const track = e.target.closest('.track');
@@ -220,18 +219,12 @@
             const src = track.getAttribute('data-src');
             const btn = track.querySelector('.play-btn');
             
-            // If the clicked track is already playing -> Pause it
             if (audioEngine.src.includes(src) && !audioEngine.paused) {
                 audioEngine.pause();
                 btn.innerText = '[ PLAY ]';
                 nowPlayingText.innerText = '> STATUS: IDLE';
-            } 
-            // If clicking a different track OR starting a new one
-            else {
-                // 1. Reset all buttons on the page to [ PLAY ]
+            } else {
                 document.querySelectorAll('.play-btn').forEach(b => b.innerText = '[ PLAY ]');
-                
-                // 2. Load and play new track
                 audioEngine.src = src;
                 audioEngine.play();
                 btn.innerText = '[ STOP ]';
@@ -246,6 +239,11 @@
             document.getElementById('camera').classList.add(nav.getAttribute('data-dir'));
             setTimeout(() => { window.location.href = nav.getAttribute('href'); }, 1200);
         }
+    });
+
+    // Handle Volume Slider independently
+    volumeSlider.addEventListener('input', function() {
+        audioEngine.volume = this.value;
     });
 
     // Reset UI when track ends naturally
