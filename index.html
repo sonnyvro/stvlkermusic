@@ -205,8 +205,14 @@
     // 2. AUDIO ENGINE & BUTTON DELEGATION
     const audioEngine = new Audio();
     const nowPlayingText = document.getElementById('now-playing');
-    
-    document.body.addEventListener('click', function(e) {
+    const volumeSlider = document.getElementById('vol-slider'); // Make sure we grab the slider
+
+    // LINK SLIDER TO VOLUME
+    volumeSlider.addEventListener('input', function() {
+        audioEngine.volume = this.value;
+    });
+
+    // ... rest of your existing script ...
         
         // Handle Track Clicks
         const track = e.target.closest('.track');
