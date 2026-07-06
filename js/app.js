@@ -33,7 +33,6 @@ const volumeSlider = document.getElementById('vol-slider');
 const nowPlayingText = document.getElementById('now-playing');
 let currentTrackElement = null;
 
-// Set initial volume
 audioEngine.volume = volumeSlider.value;
 volumeSlider.addEventListener('input', (e) => {
     audioEngine.volume = e.target.value;
@@ -45,22 +44,18 @@ document.querySelectorAll('.track').forEach(track => {
         const btn = this.querySelector('.play-btn');
         const name = this.querySelector('.track-name').innerText;
 
-        // If clicking the track that is already playing
         if (currentTrackElement === this && !audioEngine.paused) {
             audioEngine.pause();
             btn.innerText = '[ PLAY ]';
             nowPlayingText.innerText = '> STATUS: PAUSED';
             this.classList.remove('active');
         } 
-        // If clicking a new track or resuming
         else {
-            // Reset all other buttons
             document.querySelectorAll('.track').forEach(t => {
                 t.querySelector('.play-btn').innerText = '[ PLAY ]';
                 t.classList.remove('active');
             });
 
-            // If it's a completely new track, change the source
             if (currentTrackElement !== this) {
                 audioEngine.src = src;
                 currentTrackElement = this;
@@ -74,7 +69,6 @@ document.querySelectorAll('.track').forEach(track => {
     });
 });
 
-// Reset when track ends
 audioEngine.addEventListener('ended', () => {
     if (currentTrackElement) {
         currentTrackElement.querySelector('.play-btn').innerText = '[ PLAY ]';
@@ -86,23 +80,34 @@ audioEngine.addEventListener('ended', () => {
 // 3. 3D CAMERA PAN LOGIC
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function(e) {
-        // Let external links (like Airbit) open in a new tab without panning
         if (this.target === "_blank") return;
-
         e.preventDefault();
         const camera = document.getElementById('camera');
         const dir = this.getAttribute('data-dir');
         const url = this.getAttribute('href');
-
-        // Pan the room
-        if (dir) {
-            camera.classList.add(dir);
-        }
-
-        // Transition after animation
-        setTimeout(() => {
-            window.location.href = url;
-        }, 1200);
+        if (dir) camera.classList.add(dir);
+        setTimeout(() => { window.location.href = url; }, 1200);
     });
 });
- 
+
+// 4. WALKING TRANSITION TO DARK HOUSE
+const homeBtn = document.querySelector('.home-btn');
+if (homeBtn) {
+    homeBtn.addEventListener('click', function() {
+        const viewport = document.getElementById('viewport');
+        const mainStack = document.querySelector('.layout-stack');
+        const houseScene = document.getElementById('house-scene');
+
+        // 1. Hide the current stack, show the house
+        mainStack.style.opacity = '0';
+        houseScene.style.display = 'block';
+
+        // 2. Trigger the walking animation
+        viewport.classList.add('walking-mode');
+
+        // 3. Redirect after the walk finishes
+        setTimeout(() => {
+            window.location.href = 'house-page.html';
+        }, 2500);
+    });
+}
