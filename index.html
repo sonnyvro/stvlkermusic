@@ -6,109 +6,81 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #000000; --panel: rgba(10, 0, 0, 0.85); --red: #ff0000; --dim-red: #330000; --text: #e0a0a0; }
+        
+        body { 
+            background-color: var(--bg) !important; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('wallpaper.jpg'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            color: var(--text) !important; font-family: 'VT323', monospace; margin: 0; overflow: hidden; perspective: 1000px;
+        }
 
-        /* --- THE EASTER EGG SYSTEM BREACH (GREEN MODE) --- */
-        body.hacked { --red: #00ff33; --dim-red: #004400; --text: #a0e0a0; --panel: rgba(0, 25, 0, 0.85); }
-        body.hacked #clouds-layer { filter: sepia(100%) hue-rotate(70deg) saturate(500%) brightness(0.8); }
-
-        body { background-color: #000000 !important; background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('wallpaper.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text) !important; font-family: 'VT323', monospace; margin: 0; overflow: hidden; perspective: 1000px; cursor: crosshair; transition: color 0.5s; }
-
-        /* --- SURVEILLANCE MONITOR EFFECT --- */
+        /* Overlays */
         #monitor-shell { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10000; border-radius: 50% / 10%; box-shadow: inset 0 0 100px 30px rgba(0,0,0,0.8); background: radial-gradient(circle at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%); }
         #crt-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9998; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 4px, 3px 100%; animation: crt-flicker 0.15s infinite; }
-        @keyframes crt-flicker { 0% { opacity: 0.95; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
-
-        /* --- WALKING ANIMATION --- */
-        .walking-mode { animation: walkToHouse 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes walkToHouse { 0% { transform: rotateY(0deg) translateZ(0px); } 30% { transform: rotateY(45deg) translateZ(0px); } 100% { transform: rotateY(0deg) translateZ(800px); } }
-
-        /* --- EXISTING STYLES --- */
-        #boot-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; color: var(--red); z-index: 9997; display: flex; flex-direction: column; padding: 40px; font-size: 1.5rem; transition: opacity 0.5s; }
-        #crt-boot { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 10000; pointer-events: none; animation: crt-power-on 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-        @keyframes crt-power-on { 0% { transform: scale(0.001, 0.001); opacity: 1; } 60% { transform: scale(1, 1); opacity: 1; background: #ffffff; } 100% { opacity: 0; visibility: hidden; } }
-
-        #clouds-layer { position: fixed; width: 100%; height: 100%; background-image: url('clouds.png'); z-index: 1; pointer-events: none; animation: cloudDrift 120s linear infinite; }
+        #clouds-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url('clouds.png'); z-index: 1; pointer-events: none; animation: cloudDrift 120s linear infinite; }
         @keyframes cloudDrift { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
-        #rain-canvas { position: fixed; z-index: 2; pointer-events: none; }
+        /* Audio & Layout */
         #viewport { position: relative; z-index: 3; width: 100vw; height: 100vh; overflow-y: auto; }
         .layout-stack { display: grid; gap: 25px; max-width: 600px; margin: 40px auto; padding: 20px; transition: opacity 0.5s; }
-        
         .box { border: 1px solid var(--dim-red); background: var(--panel); padding: 25px; position: relative; }
-        .box-title { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--red); border-bottom: 1px solid var(--dim-red); padding-bottom: 10px; }
+        .track { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #110000; cursor: pointer; }
+        .play-btn { width: 80px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--text); }
+        .track.active .track-name { color: var(--red); }
         
-        .home-btn { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 20px; font-family: 'Press Start 2P'; font-size: 0.8rem; width: 100%; }
-        .home-btn:hover { background: var(--red); color: #000; }
-        
-        /* Utility styles for existing elements */
-        h1 { font-family: 'Press Start 2P'; color: var(--red); font-size: 2rem; margin: 0; animation: neonFlicker 4s infinite; }
-        @keyframes neonFlicker { 0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; text-shadow: 0 0 2px var(--red), 0 0 8px var(--red); } }
-        .glitch-text { animation: neonFlicker 0.1s infinite !important; color: #fff !important; }
-        #visitor-counter { text-align: center; font-size: 0.9rem; color: var(--dim-red); margin-bottom: 50px; }
+        .walking-mode { animation: walkToHouse 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        @keyframes walkToHouse { 0% { transform: rotateY(0deg) translateZ(0px); } 100% { transform: rotateY(0deg) translateZ(800px); } }
     </style>
 </head>
 <body>
-    <div id="monitor-shell"></div>
-    <div id="crt-boot"></div>
-    <div id="crt-overlay"></div>
-    <div id="boot-screen"></div>
+    <div id="monitor-shell"></div><div id="crt-overlay"></div>
     <div id="clouds-layer"></div>
-    <canvas id="rain-canvas"></canvas>
 
     <div id="viewport">
-        <div id="camera">
-            <main class="layout-stack">
-                <header><h1>SONNYVRO // STVLKING</h1></header>
-
-                <section class="box"><div class="box-title">STVLKING</div><p>Welcome. Projects, art, info, and store.</p></section>
-                <section class="box"><div class="box-title">SONNYVRO</div><p><strong>Alias:</strong> Sonny // <strong>Status:</strong> Actively coding:(</p></section>
-                <section class="box"><div class="box-title">BLOG</div><p id="secret-log"><strong>> LOG ENTRY: 07.2026</strong></p></section>
-
-                <section class="box" id="beats-box">
-                    <div class="box-title">BEATS FOR SALE</div>
-                    <ul class="tracklist" style="list-style: none; padding: 0;">
-                        <li class="track" data-src="music/widow.mp3"><span class="play-btn">[ PLAY ]</span> <span class="track-name">widow.mp3</span></li>
-                    </ul>
-                </section>
-
-                <section id="house-scene" style="display:none; text-align:center; padding-top: 100px;">
-                    <h2 style="color: var(--red);">THE DARK HOUSE</h2>
-                    <img src="dark-house.png" style="width: 300px; opacity: 0.5;">
-                </section>
-
-                <button class="home-btn">[ WALK TO HOUSE ]</button>
-                <div id="visitor-counter">> UNIQUE_CONNECTIONS: <span id="hit-count">000000</span></div>
-            </main>
-        </div>
+        <main class="layout-stack">
+            <section class="box">
+                <div class="box-title">BEATS FOR SALE</div>
+                <div id="now-playing" style="color:red; margin-bottom:10px;">> STATUS: IDLE</div>
+                <ul class="tracklist" style="list-style: none; padding: 0;">
+                    <li class="track" data-src="music/widow.mp3"><span class="play-btn">[ PLAY ]</span> <span class="track-name">widow.mp3</span></li>
+                    <li class="track" data-src="music/error.mp3"><span class="play-btn">[ PLAY ]</span> <span class="track-name">error.mp3</span></li>
+                    <li class="track" data-src="music/killing.mp3"><span class="play-btn">[ PLAY ]</span> <span class="track-name">killing.mp3</span></li>
+                </ul>
+            </section>
+            
+            <section id="house-scene" style="display:none; text-align:center;"><h2 style="color:red;">THE DARK HOUSE</h2></section>
+            <button class="home-btn">[ WALK TO HOUSE ]</button>
+        </main>
     </div>
 
 <script>
-    // Boot & Counter
-    const bootScreen = document.getElementById('boot-screen');
-    const bootLines = ["> INITIALIZING...", "> ACCESSING MAINFRAME..."];
-    let delay = 800;
-    bootLines.forEach(line => setTimeout(() => bootScreen.innerHTML += `<div>${line}</div>`, delay += 600));
-    setTimeout(() => { bootScreen.style.opacity = '0'; setTimeout(() => bootScreen.remove(), 500); }, delay + 800);
+    const audioEngine = new Audio();
+    const nowPlaying = document.getElementById('now-playing');
 
-    fetch('https://api.counterapi.dev/v1/stvlking_online/visitor_count/up')
-        .then(r => r.json()).then(d => document.getElementById('hit-count').innerText = d.count.toString().padStart(6, '0'));
-
-    // Walking Animation
-    document.querySelector('.home-btn').addEventListener('click', function() {
-        const viewport = document.getElementById('viewport');
-        document.querySelector('.layout-stack').style.opacity = '0';
-        document.getElementById('house-scene').style.display = 'block';
-        viewport.classList.add('walking-mode');
-        setTimeout(() => { window.location.href = 'house.html'; }, 2000);
+    document.querySelectorAll('.track').forEach(track => {
+        track.addEventListener('click', function() {
+            const src = this.getAttribute('data-src');
+            if (audioEngine.src.includes(src) && !audioEngine.paused) {
+                audioEngine.pause();
+                this.classList.remove('active');
+                nowPlaying.innerText = '> STATUS: IDLE';
+            } else {
+                audioEngine.src = src;
+                audioEngine.play();
+                document.querySelectorAll('.track').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                nowPlaying.innerText = `> PLAYING: ${this.querySelector('.track-name').innerText}`;
+            }
+        });
     });
 
-    // Easter Egg
-    document.getElementById('secret-log').addEventListener('click', function() {
-        document.body.classList.toggle('hacked');
-        this.innerHTML = document.body.classList.contains('hacked') ? "<strong>> SYSTEM BREACH DETECTED</strong>" : "<strong>> LOG ENTRY: 07.2026</strong>";
+    document.querySelector('.home-btn').addEventListener('click', function() {
+        document.querySelector('.layout-stack').style.opacity = '0';
+        document.getElementById('house-scene').style.display = 'block';
+        document.getElementById('viewport').classList.add('walking-mode');
+        setTimeout(() => { window.location.href = 'house.html'; }, 2000);
     });
 </script>
 </body>
 </html>
-
  
