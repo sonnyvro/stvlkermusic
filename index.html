@@ -23,9 +23,7 @@
 
         @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         @keyframes crt-flicker { 0% { opacity: 0.95; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
-        .walk-into-house { animation: walkSequence 2.5s ease-in forwards; }
-        @keyframes walkSequence { 0% { transform: scale(1) translateY(0); } 100% { transform: scale(3) translateY(-10%); } }
-
+        
         /* Layout */
         #viewport { position: relative; z-index: 3; width: 100vw; height: 100vh; overflow-y: auto; }
         .layout-stack { display: grid; gap: 25px; max-width: 600px; margin: 40px auto; padding: 20px; transition: opacity 0.5s; }
@@ -62,17 +60,20 @@
                 </ul>
             </section>
 
-       <section id="house-scene" style="display:none; text-align:center; padding-top: 50px;">
-    <h2 style="color: var(--red);">THE DARK HOUSE</h2>
-    
-    <div id="house-container" style="position: relative; width: 400px; height: 300px; margin: 0 auto; overflow: hidden;">
-        
-        <video id="door-video" src="video/dark-door.mp4" playsinline muted style="width: 100%; height: 100%; object-fit: cover;"></video>
-        
-        <button id="door-btn" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"></button>
-        
+            <section class="box" style="text-align: center;">
+                <button id="proceed-btn" class="home-btn">[ PROCEED ]</button>
+            </section>
+
+            <section id="house-scene" style="display:none; text-align:center; padding-top: 50px;">
+                <h2 style="color: var(--red);">THE DARK HOUSE</h2>
+                <div id="house-container" style="position: relative; width: 400px; height: 300px; margin: 0 auto; overflow: hidden;">
+                    <video id="door-video" src="video/dark-door.mp4" playsinline muted style="width: 100%; height: 100%; object-fit: cover;"></video>
+                    <button id="door-btn" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"></button>
+                </div>
+            </section>
+        </main>
     </div>
-</section>
+
 <script>
     // Audio Engine
     const audioEngine = new Audio();
@@ -104,16 +105,33 @@
     }
     animateRain();
 
-    // Transition & Hack Logic
-    document.querySelector('.home-btn').addEventListener('click', function() {
+    // Transition Logic
+    document.getElementById('proceed-btn').addEventListener('click', function() {
         const overlay = document.getElementById('transition-overlay');
         const stack = document.querySelector('.layout-stack');
         const house = document.getElementById('house-scene');
-        const stepSound = document.getElementById('grass-step-sound');
         overlay.classList.add('fade-in');
-        let steps = 0;
-        const walkInterval = setInterval(() => { stepSound.currentTime = 0; stepSound.play(); if (++steps >= 4) clearInterval(walkInterval); }, 500);
-        setTimeout(() => { stack.style.display = 'none'; house.style.display = 'block'; overlay.classList.remove('fade-in'); house.classList.add('walk-into-house'); }, 1200);
+        
+        setTimeout(() => {
+            stack.style.display = 'none';
+            house.style.display = 'block';
+            overlay.classList.remove('fade-in');
+        }, 1000);
+    });
+
+    // Door Interaction
+    document.getElementById('door-btn').addEventListener('click', function() {
+        const doorVideo = document.getElementById('door-video');
+        this.style.display = 'none';
+        if(doorVideo) {
+            doorVideo.play();
+            setTimeout(() => {
+                doorVideo.style.transition = "transform 1.5s ease-in, opacity 1s";
+                doorVideo.style.transform = "scale(4)";
+                doorVideo.style.opacity = "0";
+            }, 1500);
+        }
+        setTimeout(() => { window.location.href = 'inside-house.html'; }, 3000);
     });
 
     document.getElementById('secret-log').addEventListener('click', function() {
