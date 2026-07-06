@@ -9,7 +9,7 @@
         body.hacked { --red: #00ff33; --dim-red: #004400; --text: #a0e0a0; --panel: rgba(0, 25, 0, 0.85); }
         body.hacked #clouds-layer { filter: sepia(100%) hue-rotate(70deg) saturate(500%) brightness(0.8); }
 
-        body { background-color: #000 !important; background-image: url('wallpaper.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text) !important; font-family: 'VT323', monospace; margin: 0; overflow: hidden; perspective: 1000px; cursor: crosshair; }
+        body { background-color: var(--bg) !important; background-image: url('wallpaper.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text) !important; font-family: 'VT323', monospace; margin: 0; overflow: hidden; perspective: 1000px; cursor: crosshair; }
 
         /* Atmospheric Effects */
         #clouds-layer { position: fixed; top: 0; left: 0; width: 200%; height: 100%; background: url('clouds.png') repeat-x; z-index: 1; animation: drift 60s linear infinite; pointer-events: none; opacity: 0.5; }
@@ -34,22 +34,22 @@
         .track.active .track-name { color: var(--red); }
         .home-btn { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 20px; font-family: 'Press Start 2P'; font-size: 0.8rem; width: 100%; cursor: pointer; }
 
-        /* Updated House Styling */
+        /* The Dark House Scene - Hidden by default and removed from layout */
         #house-scene { 
             display: none; 
+            visibility: hidden;
             position: fixed; 
             top: 0; left: 0; 
             width: 100vw; height: 100vh; 
             background-color: #000; 
-            display: flex; 
+            z-index: 10001;
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            z-index: 9999; 
         }
         #house-container { 
             position: relative; 
-            width: 80vw; /* Much larger size */
+            width: 80vw; 
             height: 80vh; 
             overflow: hidden; 
             background-color: #000; 
@@ -135,12 +135,16 @@
         overlay.classList.add('fade-in');
         
         setTimeout(() => {
+            // HIDE EVERYTHING
             document.getElementById('clouds-layer').style.display = 'none';
             document.getElementById('rain-layer').style.display = 'none';
             document.body.style.backgroundImage = 'none';
             document.body.style.backgroundColor = '#000';
             stack.style.display = 'none';
-            house.style.display = 'flex'; // Use flex to match CSS
+            
+            // SHOW HOUSE
+            house.style.display = 'flex';
+            house.style.visibility = 'visible';
             overlay.classList.remove('fade-in');
         }, 1000);
     });
@@ -164,3 +168,4 @@
 </script>
 </body>
 </html>
+ 
