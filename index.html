@@ -13,6 +13,18 @@
             --text: #e0a0a0;
         }
 
+        /* --- THE EASTER EGG SYSTEM BREACH (GREEN MODE) --- */
+        body.hacked {
+            --red: #00ff00;
+            --dim-red: #002200;
+            --text: #a0e0a0;
+        }
+        
+        body.hacked #clouds-layer {
+            /* This forces the original white/gray clouds into a toxic green */
+            filter: sepia(100%) hue-rotate(70deg) saturate(500%) brightness(0.8);
+        }
+
         /* GLOBALLY APPLY RETRO CROSSHAIR CURSOR */
         body { 
             background-color: #000000 !important; 
@@ -26,7 +38,8 @@
             margin: 0; 
             overflow-x: hidden; 
             perspective: 1000px;
-            cursor: crosshair; /* The custom cursor */
+            cursor: crosshair; 
+            transition: color 0.5s;
         }
 
         /* Make clickable items act like a normal pointer */
@@ -48,6 +61,7 @@
             z-index: 1;
             pointer-events: none;
             animation: cloudDrift 120s linear infinite;
+            transition: filter 1s ease;
         }
         @keyframes cloudDrift { from { background-position: 0 0; } to { background-position: 1000px 0; } }
 
@@ -55,9 +69,9 @@
         #viewport { position: relative; z-index: 3; width: 100vw; min-height: 100vh; }
 
         .layout-stack { display: grid; grid-template-columns: 1fr; gap: 25px; max-width: 600px; margin: 40px auto; padding: 20px; }
-        header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); }
+        header { text-align: center; margin-bottom: 20px; padding: 20px; border: 1px solid var(--dim-red); background: var(--panel); transition: 0.5s; }
         
-        h1, .divider span { font-family: 'Press Start 2P'; color: var(--red); margin: 0; animation: neonFlicker 4s infinite; }
+        h1, .divider span { font-family: 'Press Start 2P'; color: var(--red); margin: 0; animation: neonFlicker 4s infinite; transition: 0.5s; }
         h1 { font-size: 2rem; }
         .divider span { font-size: 0.7rem; }
 
@@ -67,15 +81,14 @@
         }
 
         .divider { display: flex; align-items: center; text-align: center; margin: 20px 0; }
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--red); }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--red); transition: 0.5s; }
         .divider:not(:empty)::before { margin-right: 15px; }
         .divider:not(:empty)::after { margin-left: 15px; }
 
-        .box { border: 1px solid var(--dim-red); background: var(--panel); padding: 25px; min-height: 150px; position: relative; line-height: 1.6; transition: border-color 0.3s, box-shadow 0.3s; }
-        .box::before { content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; background: var(--dim-red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%); transition: background 0.3s; }
-        .box-title { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--red); margin-bottom: 20px; border-bottom: 1px solid var(--dim-red); padding-bottom: 10px; }
+        .box { border: 1px solid var(--dim-red); background: var(--panel); padding: 25px; min-height: 150px; position: relative; line-height: 1.6; transition: border-color 0.5s, box-shadow 0.3s; }
+        .box::before { content: ""; position: absolute; top: -8px; left: -1px; right: -1px; height: 8px; background: var(--dim-red); clip-path: polygon(0% 100%, 5% 0%, 95% 0%, 100% 100%); transition: background 0.5s; }
+        .box-title { font-family: 'Press Start 2P'; font-size: 0.8rem; color: var(--red); margin-bottom: 20px; border-bottom: 1px solid var(--dim-red); padding-bottom: 10px; transition: 0.5s; }
 
-        /* The Pulse Animation for the Audio Box */
         .box.playing { border-color: var(--red); animation: borderPulse 1s infinite alternate; }
         .box.playing::before { background: var(--red); }
         @keyframes borderPulse { 
@@ -83,33 +96,30 @@
             to { box-shadow: 0 0 20px var(--red); } 
         }
 
-        .links a { display: block; color: var(--text); text-decoration: none; margin: 10px 0; }
+        .links a { display: block; color: var(--text); text-decoration: none; margin: 10px 0; transition: 0.3s; }
         .links a:hover { color: var(--red); padding-left: 5px; }
 
         .home-btn { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 20px; font-family: 'Press Start 2P'; font-size: 0.8rem; transition: 0.3s; width: 100%; margin-bottom: 20px; }
         .home-btn:hover { background: var(--red); color: #000000; }
 
-        .audio-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--dim-red); padding-bottom: 15px; margin-bottom: 15px; font-size: 0.9rem; }
-        #now-playing { color: var(--red); animation: pulse 2s infinite; }
+        .audio-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--dim-red); padding-bottom: 15px; margin-bottom: 15px; font-size: 0.9rem; transition: 0.5s; }
+        #now-playing { color: var(--red); animation: pulse 2s infinite; transition: 0.5s; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         
-        .track { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #110000; }
-        .play-btn { width: 85px; padding: 5px; background: var(--dim-red); color: var(--text); font-family: 'Press Start 2P'; font-size: 0.6rem; text-align: center; border: 1px solid var(--red); transition: 0.2s; }
+        .track { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #110000; transition: 0.5s; }
+        .play-btn { width: 85px; padding: 5px; background: var(--dim-red); color: var(--text); font-family: 'Press Start 2P'; font-size: 0.6rem; text-align: center; border: 1px solid var(--red); transition: 0.5s; }
         .track:hover .play-btn { background: var(--red); color: #000; }
         .track.active .play-btn { background: var(--red); color: #000; }
         .track-name { flex-grow: 1; margin-left: 15px; }
 
-        /* Commlink Form Styles */
-        .commlink-input { background: #000; border: 1px solid var(--dim-red); color: var(--red); font-family: 'VT323', monospace; padding: 15px; width: 100%; box-sizing: border-box; margin-bottom: 15px; font-size: 1.2rem; resize: none; }
+        .commlink-input { background: #000; border: 1px solid var(--dim-red); color: var(--red); font-family: 'VT323', monospace; padding: 15px; width: 100%; box-sizing: border-box; margin-bottom: 15px; font-size: 1.2rem; resize: none; transition: 0.5s; }
         .commlink-input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 10px var(--dim-red); }
         .commlink-input::placeholder { color: var(--dim-red); }
-        .commlink-btn { background: var(--dim-red); border: 1px solid var(--red); color: var(--text); font-family: 'Press Start 2P'; font-size: 0.7rem; padding: 15px; width: 100%; transition: 0.3s; }
+        .commlink-btn { background: var(--dim-red); border: 1px solid var(--red); color: var(--text); font-family: 'Press Start 2P'; font-size: 0.7rem; padding: 15px; width: 100%; transition: 0.5s; }
         .commlink-btn:hover { background: var(--red); color: #000; }
 
-        /* Easter Egg Glitch Class */
         .glitch-text { animation: neonFlicker 0.1s infinite !important; color: #fff !important; }
-        
-        #visitor-counter { text-align: center; font-size: 0.9rem; color: var(--dim-red); margin-bottom: 50px; }
+        #visitor-counter { text-align: center; font-size: 0.9rem; color: var(--dim-red); margin-bottom: 50px; transition: 0.5s; }
     </style>
 </head>
 <body>
@@ -161,9 +171,10 @@
 
                 <section class="box">
                     <div class="box-title">COMMLINK</div>
-                    <form onsubmit="event.preventDefault(); alert('ERROR 404: MAINFRAME REJECTED MESSAGE.');">
-                        <input type="text" class="commlink-input" placeholder="> ENTER_DESIGNATION" required>
-                        <textarea class="commlink-input" rows="3" placeholder="> ENTER_MESSAGE..." required></textarea>
+                    <form action="https://formspree.io/f/mjgqldkb" method="POST">
+                        <input type="text" name="name" class="commlink-input" placeholder="> ENTER_DESIGNATION" required>
+                        <input type="email" name="email" class="commlink-input" placeholder="> ENTER_RETURN_ADDRESS" required>
+                        <textarea name="message" class="commlink-input" rows="3" placeholder="> ENTER_MESSAGE..." required></textarea>
                         <button type="submit" class="commlink-btn">[ TRANSMIT ]</button>
                     </form>
                 </section>
@@ -171,8 +182,8 @@
                 <section class="box">
                     <div class="box-title">LINKS</div>
                     <nav class="links">
-                        <a href="https://www.instagram.com/sonnyvro">> INSTAGRAM</a>
-                        <a href="https://soundcloud.com/user-11954578">> SOUNDCLOUD</a>
+                        <a href="https://www.instagram.com/sonnyvro" target="_blank">> INSTAGRAM</a>
+                        <a href="https://soundcloud.com/user-11954578" target="_blank">> SOUNDCLOUD</a>
                     </nav>
                 </section>
 
@@ -187,7 +198,7 @@
     </div>
 
 <script>
-    // 1. Boot Sequence Logic
+    // Boot Sequence
     const bootScreen = document.getElementById('boot-screen');
     const bootLines = [
         "> INITIALIZING AUDIO ENGINE... OK",
@@ -204,13 +215,25 @@
         setTimeout(() => bootScreen.remove(), 500);
     }, bootDelay + 800);
 
-    // 2. Easter Egg Logic
+    // Dynamic Rain Color Variable (Starts Red)
+    let rainColor = '#ff0000';
+
+    // Easter Egg Color Swap Toggle
     document.getElementById('secret-log').addEventListener('click', function() {
-        this.innerHTML = "<strong>> SYSTEM BREACH DETECTED... THEY ARE WATCHING</strong>";
-        this.classList.add('glitch-text');
+        document.body.classList.toggle('hacked');
+        
+        if(document.body.classList.contains('hacked')) {
+            rainColor = '#00ff00'; // Switches rain to toxic green
+            this.innerHTML = "<strong>> SYSTEM BREACH DETECTED... THEY ARE WATCHING</strong>";
+            this.classList.add('glitch-text');
+        } else {
+            rainColor = '#ff0000'; // Switches back to default red
+            this.innerHTML = "<strong>> LOG ENTRY: 07.2026</strong>";
+            this.classList.remove('glitch-text');
+        }
     });
 
-    // 3. Fake Live Visitor Counter
+    // Fake Live Visitor Counter
     setInterval(() => {
         const counter = document.getElementById('hit-count');
         if(counter && Math.random() > 0.6) {
@@ -219,7 +242,7 @@
         }
     }, 4000);
 
-    // 4. Rain Engine
+    // Rain Engine
     const canvas = document.getElementById('rain-canvas');
     const ctx = canvas.getContext('2d');
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -228,7 +251,10 @@
     function createDrop() { return { x: Math.random() * canvas.width, y: -10, speed: 2 + Math.random() * 3 }; }
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#ff0000';
+        
+        // Use the dynamic rain color here
+        ctx.fillStyle = rainColor;
+        
         if (drops.length < 150) drops.push(createDrop());
         drops.forEach(d => {
             if (d.y > canvas.height) { d.y = -10; d.x = Math.random() * canvas.width; }
@@ -238,7 +264,7 @@
     }
     animate();
 
-    // 5. Audio Engine with Visualizer Toggle
+    // Audio Engine
     const audioEngine = new Audio();
     const nowPlayingText = document.getElementById('now-playing');
     const volumeSlider = document.getElementById('vol-slider');
@@ -254,24 +280,21 @@
             const btn = track.querySelector('.play-btn');
             
             if (audioEngine.src.includes(src) && !audioEngine.paused) {
-                // Pause Logic
                 audioEngine.pause();
                 btn.innerText = '[ PLAY ]';
                 nowPlayingText.innerText = '> STATUS: IDLE';
-                beatsBox.classList.remove('playing'); // Turn off pulse
+                beatsBox.classList.remove('playing'); 
             } else {
-                // Play Logic
                 document.querySelectorAll('.play-btn').forEach(b => b.innerText = '[ PLAY ]');
                 audioEngine.src = src;
                 audioEngine.play();
                 btn.innerText = '[ STOP ]';
                 nowPlayingText.innerText = '> PLAYING: ' + track.querySelector('.track-name').innerText;
-                beatsBox.classList.add('playing'); // Turn on pulse
+                beatsBox.classList.add('playing'); 
             }
         }
     });
 
-    // Handle track ending naturally
     audioEngine.addEventListener('ended', () => {
         document.querySelectorAll('.play-btn').forEach(b => b.innerText = '[ PLAY ]');
         nowPlayingText.innerText = '> STATUS: IDLE';
