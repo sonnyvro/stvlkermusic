@@ -111,3 +111,18 @@ document.querySelector('.home-btn').addEventListener('click', function() {
     }, 3500);
 });
 }
+// Door Interaction
+document.getElementById('door-btn').addEventListener('click', function() {
+    // Optional: Add a creak sound if you have 'door-creak.mp3'
+    // const doorSound = new Audio('door-creak.mp3'); 
+    // doorSound.play();
+    
+    // Visual feedback
+    this.style.border = "2px solid #fff";
+    this.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
+    
+    // Navigate to the next page
+    setTimeout(() => {
+        window.location.href = 'inside-house.html';
+    }, 500);
+});
