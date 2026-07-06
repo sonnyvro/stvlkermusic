@@ -9,7 +9,7 @@
         body.hacked { --red: #00ff33; --dim-red: #004400; --text: #a0e0a0; --panel: rgba(0, 25, 0, 0.85); }
         body.hacked #clouds-layer { filter: sepia(100%) hue-rotate(70deg) saturate(500%) brightness(0.8); }
 
-        body { background-color: var(--bg) !important; background-image: url('wallpaper.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text) !important; font-family: 'VT323', monospace; margin: 0; overflow: hidden; perspective: 1000px; cursor: crosshair; }
+        body { background-color: #000 !important; background-image: url('wallpaper.jpg'); background-size: cover; background-position: center; background-attachment: fixed; color: var(--text) !important; font-family: 'VT323', monospace; margin: 0; overflow: hidden; perspective: 1000px; cursor: crosshair; }
 
         /* Atmospheric Effects */
         #clouds-layer { position: fixed; top: 0; left: 0; width: 200%; height: 100%; background: url('clouds.png') repeat-x; z-index: 1; animation: drift 60s linear infinite; pointer-events: none; opacity: 0.5; }
@@ -33,6 +33,27 @@
         .play-btn { width: 80px; font-family: 'Press Start 2P'; font-size: 0.6rem; color: var(--text); }
         .track.active .track-name { color: var(--red); }
         .home-btn { background: transparent; border: 1px solid var(--red); color: var(--red); padding: 20px; font-family: 'Press Start 2P'; font-size: 0.8rem; width: 100%; cursor: pointer; }
+
+        /* Updated House Styling */
+        #house-scene { 
+            display: none; 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh; 
+            background-color: #000; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999; 
+        }
+        #house-container { 
+            position: relative; 
+            width: 80vw; /* Much larger size */
+            height: 80vh; 
+            overflow: hidden; 
+            background-color: #000; 
+        }
     </style>
 </head>
 <body>
@@ -64,15 +85,15 @@
                 <button id="proceed-btn" class="home-btn">[ PROCEED ]</button>
             </section>
         </main>
-
-        <section id="house-scene" style="display:none; text-align:center; padding-top: 50px;">
-            <h2 style="color: var(--red);">THE DARK HOUSE</h2>
-            <div id="house-container" style="position: relative; width: 400px; height: 300px; margin: 0 auto; overflow: hidden;">
-                <video id="door-video" src="video/dark-door.mp4" playsinline muted style="width: 100%; height: 100%; object-fit: cover;"></video>
-                <button id="door-btn" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"></button>
-            </div>
-        </section>
     </div>
+
+    <section id="house-scene">
+        <h2 style="color: var(--red); margin-bottom: 20px;">THE DARK HOUSE</h2>
+        <div id="house-container">
+            <video id="door-video" src="video/dark-door.mp4" playsinline muted style="width: 100%; height: 100%; object-fit: cover;"></video>
+            <button id="door-btn" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer;"></button>
+        </div>
+    </section>
 
 <script>
     // Audio Engine
@@ -114,15 +135,12 @@
         overlay.classList.add('fade-in');
         
         setTimeout(() => {
-            // HIDE ATMOSPHERE
             document.getElementById('clouds-layer').style.display = 'none';
             document.getElementById('rain-layer').style.display = 'none';
             document.body.style.backgroundImage = 'none';
             document.body.style.backgroundColor = '#000';
             stack.style.display = 'none';
-            
-            // SHOW HOUSE
-            house.style.display = 'block';
+            house.style.display = 'flex'; // Use flex to match CSS
             overlay.classList.remove('fade-in');
         }, 1000);
     });
@@ -133,7 +151,6 @@
         this.style.display = 'none';
         if(doorVideo) {
             doorVideo.play();
-            // SLOW ZOOM
             doorVideo.style.transition = "transform 4s ease-in-out";
             doorVideo.style.transform = "scale(4)";
         }
@@ -147,5 +164,3 @@
 </script>
 </body>
 </html>
-
- 
